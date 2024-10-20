@@ -15,6 +15,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace SubastaMaestra.Data.Implements
 {
 
@@ -32,7 +34,7 @@ namespace SubastaMaestra.Data.Implements
         // Crear una nueva subasta
         public async Task<OperationResult<AuctionCreateDTO>> CreateAuctionAsync(AuctionCreateDTO auctionCreateDTO)
         {
-           
+
             var auction = _mapper.Map<Auction>(auctionCreateDTO);
             auction.CurrentState = AuctionState.Pending;
             auction.StartDate= auctionCreateDTO.StartDate.Date.AddHours(0); // inicia a la 00:00
@@ -40,10 +42,10 @@ namespace SubastaMaestra.Data.Implements
 
             try
             {
-                
+
                 await _context.Auctions.AddAsync(auction);
                 await _context.SaveChangesAsync();
-                return new OperationResult<AuctionCreateDTO> { Success = true, Message="Suabasta creada con exito"};
+                return new OperationResult<AuctionCreateDTO> { Success = true, Message="Suabasta creada con exito" };
             }
             catch (Exception ex)
             {
@@ -60,13 +62,13 @@ namespace SubastaMaestra.Data.Implements
                 var subasta = await _context.Auctions.FindAsync(id_subasta);
                 if (subasta == null)
                 {
-                    return new OperationResult<int> { Success= false, Message= "Subasta no encontrada", Value= -1};
+                    return new OperationResult<int> { Success= false, Message= "Subasta no encontrada", Value= -1 };
                 }
 
                 subasta.CurrentState = AuctionState.Closed;  // 2 = cerrada o deshabilitada
                 subasta.FinishDate = DateTime.Now;  // Actualizar la fecha de cierre a la actual
                 // desactivar productos
-                var op= await _context.SaveChangesAsync();
+                var op = await _context.SaveChangesAsync();
 
                 return new OperationResult<int> { Success = true, Message = "Subasta cerrada correctamente", Value = 1 };
 
@@ -80,7 +82,7 @@ namespace SubastaMaestra.Data.Implements
         }
 
         // Modificar una subasta existente
-        public async Task<OperationResult<int>> EditAuctionAsync(AuctionDTO subasta,int Id)
+        public async Task<OperationResult<int>> EditAuctionAsync(AuctionDTO subasta, int Id)
         {
 
 
@@ -110,7 +112,7 @@ namespace SubastaMaestra.Data.Implements
             try
             {
                 // cada que se consulta las subastas
-               // ActualizarEstadoSubastas();
+                // ActualizarEstadoSubastas();
                 var auctions = await _context.Auctions
                                      .Include(s => s.Products)   // Incluir productos asociados
                                      .ToListAsync();
@@ -118,11 +120,11 @@ namespace SubastaMaestra.Data.Implements
                 foreach (var auction in auctions)
                 {
                     var auc = _mapper.Map<AuctionDTO>(auction);
-                     auc.State = auction.CurrentState; // falla el automaper
+                    auc.State = auction.CurrentState; // falla el automaper
                     auctionsDTO.Add(auc);
 
                 }
-                return new OperationResult<List<AuctionDTO>> { Success= true, Value= auctionsDTO};
+                return new OperationResult<List<AuctionDTO>> { Success= true, Value= auctionsDTO };
             }
             catch (Exception ex)
             {
@@ -138,16 +140,16 @@ namespace SubastaMaestra.Data.Implements
             {
                 var today = DateTime.Now;
                 var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate> today )  // subasta habilitada o abierta
+                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate >today)  // subasta habilitada o abierta
                                      .ToListAsync();
-                if( auctions.Count == 0)
+                if (auctions.Count == 0)
                 {
-                    return new OperationResult<List<AuctionDTO>>{ Success = false, Message = "No hay subastas abiertas." };
+                    return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas abiertas." };
 
                 }
 
                 var auctionsDTO = new List<AuctionDTO>();
-                foreach(var item in auctions)
+                foreach (var item in auctions)
                 {
                     auctionsDTO.Add(new AuctionDTO
                     {
@@ -156,7 +158,7 @@ namespace SubastaMaestra.Data.Implements
                         StartDate = item.StartDate,
                         State = item.CurrentState,
                         Id = item.Id
-                        
+
                     });
                 }
                 return new OperationResult<List<AuctionDTO>> { Success = true, Value = auctionsDTO };
@@ -164,7 +166,7 @@ namespace SubastaMaestra.Data.Implements
             }
             catch (Exception ex)
             {
-                return new OperationResult<List<AuctionDTO>>  { Success = false, Message = "Error a buscar las subastas" };
+                return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error a buscar las subastas" };
 
             }
         }
@@ -173,7 +175,7 @@ namespace SubastaMaestra.Data.Implements
             try
             {
                 var auction = await _context.Auctions.FirstOrDefaultAsync(s => s.Id == id);
-                if( auction == null)
+                if (auction == null)
                 {
                     return new OperationResult<AuctionDTO> { Success = false, Message= "No se encontró la subasta." };
 
@@ -185,9 +187,9 @@ namespace SubastaMaestra.Data.Implements
                 {
                     var productDTO = _mapper.Map<ProductDTO>(product);
                     auctionDTO.Products.Add(productDTO);
-                    
+
                 }
-                
+
                 return new OperationResult<AuctionDTO> { Success = true, Value=auctionDTO };
             }
             catch (Exception ex)
@@ -204,11 +206,11 @@ namespace SubastaMaestra.Data.Implements
         {
             try
             {
-               var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Closed)  // subasta cerrada
-                                     .ToListAsync();
+                var auctions = await _context.Auctions
+                                      .Where(s => s.CurrentState == AuctionState.Closed)  // subasta cerrada
+                                      .ToListAsync();
 
-                if(auctions == null)
+                if (auctions == null)
                 {
                     return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas cerradas." };
 
@@ -241,10 +243,10 @@ namespace SubastaMaestra.Data.Implements
         {
             try
             {
-                 var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Closed)  // 2 = subasta cerrada
-                                     .Include(s => s.Products)   // Incluir los productos de cada subasta
-                                     .ToListAsync();
+                var auctions = await _context.Auctions
+                                    .Where(s => s.CurrentState == AuctionState.Closed)  // 2 = subasta cerrada
+                                    .Include(s => s.Products)   // Incluir los productos de cada subasta
+                                    .ToListAsync();
                 if (auctions == null)
                 {
                     return new OperationResult<List<AuctionDTO>> { Success = false, Message="No se encontraron subastas" };
@@ -263,11 +265,11 @@ namespace SubastaMaestra.Data.Implements
             }
         }
 
-       
+
 
         public async void ActualizarEstadoSubastas()
         {
-            var toCloseAuctions =  await _context.Auctions
+            var toCloseAuctions = await _context.Auctions
                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate <= DateTime.Now)
                     .ToListAsync();
 
@@ -282,13 +284,90 @@ namespace SubastaMaestra.Data.Implements
                         producto.CurrentState= ProductState.Disabled;
                     }
                 }
-                
-                
+
+
             }
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<OperationResult<List<AuctionDTO>>> GetAllPendingAuctionsAsync()
+        {
+            try
+            {
+                var auctions = await _context.Auctions
+                                      .Where(s => s.CurrentState == AuctionState.Pending)  // subasta cerrada
+                                      .ToListAsync();
+
+                if (auctions == null)
+                {
+                    return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas cerradas." };
+
+                }
+                var auctionsDTO = new List<AuctionDTO>();
+                foreach (var item in auctions)
+                {
+                    auctionsDTO.Add(new AuctionDTO
+                    {
+                        Title = item.Title,
+                        FinishDate = item.FinishDate,
+                        StartDate = item.StartDate,
+                        State = item.CurrentState
+                    });
+                }
+
+                return new OperationResult<List<AuctionDTO>> { Success = true, Value= auctionsDTO };
+
+
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error al buscar subastas" };
+
+            }
+
+        }
+
+       
+
+
+        // Obtener subastas pendientes (Estado = Pending)
+        //public async Task<OperationResult<List<AuctionDTO>>>
+        //{
+        //    try
+        //    {
+        //        var auctions = await _context.Auctions
+        //                             .Where(s => s.CurrentState == AuctionState.Pending)  // Subasta pendiente
+        //                             .ToListAsync();
+
+        //        if (auctions.Count == 0)
+        //        {
+        //            return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas pendientes." };
+        //        }
+
+        //        var auctionsDTO = new List<AuctionDTO>();
+        //        foreach (var item in auctions)
+        //        {
+        //            auctionsDTO.Add(new AuctionDTO
+        //            {
+        //                Title = item.Title,
+        //                FinishDate = item.FinishDate,
+        //                StartDate = item.StartDate,
+        //                State = item.CurrentState,
+        //                Id = item.Id
+        //            });
+        //        }
+
+        //        return new OperationResult<List<AuctionDTO>> { Success = true, Value = auctionsDTO };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error al buscar las subastas pendientes." };
+        //    }
+        //}
+
+       
+
+       
     }
-
-
 }

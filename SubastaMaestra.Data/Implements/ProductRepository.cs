@@ -101,7 +101,7 @@ namespace SubastaMaestra.Data.Implements
                 return new OperationResult<ProductDTO> { Success = false, Message = "Error al buscar el producto" };
 
             }
-        }
+        } 
 
         // Obtener todos los productos
         public async Task<OperationResult<List<ProductDTO>>> GetAllProductsAsync()
@@ -128,7 +128,7 @@ namespace SubastaMaestra.Data.Implements
                 
                 return  new OperationResult<List<ProductDTO>>
                 {
-                    Success = false,
+                    Success = true,
                     Value = productsDTO
                 }; 
             }
@@ -180,7 +180,7 @@ namespace SubastaMaestra.Data.Implements
             {
                 return new OperationResult<List<ProductDTO>>
                 {
-                    Success = false,
+                    Success = true,
                     Message = ex.Message,
                 };
 

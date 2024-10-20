@@ -153,7 +153,7 @@ namespace SubastaMaestra.Data.Seeders
 
                 await context.Auctions.AddRangeAsync(auctions);
                 await context.SaveChangesAsync();
-
+                
             }
            
         }
