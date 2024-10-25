@@ -328,46 +328,6 @@ namespace SubastaMaestra.Data.Implements
 
         }
 
-       
 
-
-        // Obtener subastas pendientes (Estado = Pending)
-        //public async Task<OperationResult<List<AuctionDTO>>>
-        //{
-        //    try
-        //    {
-        //        var auctions = await _context.Auctions
-        //                             .Where(s => s.CurrentState == AuctionState.Pending)  // Subasta pendiente
-        //                             .ToListAsync();
-
-        //        if (auctions.Count == 0)
-        //        {
-        //            return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas pendientes." };
-        //        }
-
-        //        var auctionsDTO = new List<AuctionDTO>();
-        //        foreach (var item in auctions)
-        //        {
-        //            auctionsDTO.Add(new AuctionDTO
-        //            {
-        //                Title = item.Title,
-        //                FinishDate = item.FinishDate,
-        //                StartDate = item.StartDate,
-        //                State = item.CurrentState,
-        //                Id = item.Id
-        //            });
-        //        }
-
-        //        return new OperationResult<List<AuctionDTO>> { Success = true, Value = auctionsDTO };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error al buscar las subastas pendientes." };
-        //    }
-        //}
-
-       
-
-       
     }
 }

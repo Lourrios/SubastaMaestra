@@ -21,6 +21,7 @@ namespace SubastaMaestra.Data.Interfaces
         Task<OperationResult<List<AuctionDTO>>> GetAllAuctionsAsync();
 
         Task<OperationResult<List<AuctionDTO>>> GetAllPendingAuctionsAsync();
+    
 
 
 
