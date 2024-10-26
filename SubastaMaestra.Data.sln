@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubastaMaestra.Service", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubastaMaestra.Models", "SubastaMaestra.Models\SubastaMaestra.Models.csproj", "{173B1BDC-6BF5-4E43-8B1E-ED8271CE5C8C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubastaMaestra-Escritorio", "..\SubastaMaestra-master\SubastaMaestra-Escritorio\SubastaMaestra-Escritorio.csproj", "{8F8C8E33-09DC-4CDB-AA86-0C48A5761867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubastaMaestra-Escritorio", "SubastaMaestra-Escritorio\SubastaMaestra-Escritorio.csproj", "{E8E4983C-C1EB-4878-B90E-60CC8BFD565A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{173B1BDC-6BF5-4E43-8B1E-ED8271CE5C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{173B1BDC-6BF5-4E43-8B1E-ED8271CE5C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{173B1BDC-6BF5-4E43-8B1E-ED8271CE5C8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F8C8E33-09DC-4CDB-AA86-0C48A5761867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F8C8E33-09DC-4CDB-AA86-0C48A5761867}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F8C8E33-09DC-4CDB-AA86-0C48A5761867}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F8C8E33-09DC-4CDB-AA86-0C48A5761867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8E4983C-C1EB-4878-B90E-60CC8BFD565A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8E4983C-C1EB-4878-B90E-60CC8BFD565A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8E4983C-C1EB-4878-B90E-60CC8BFD565A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8E4983C-C1EB-4878-B90E-60CC8BFD565A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

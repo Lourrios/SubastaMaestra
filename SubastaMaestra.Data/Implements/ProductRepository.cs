@@ -19,6 +19,7 @@ namespace SubastaMaestra.Data.Implements
     public class ProductRepository : IProductRepository
     {
         private readonly SubastaContext _context;
+
         private readonly IMapper _mapper;
 
         public ProductRepository(SubastaContext context, IMapper mapper)
@@ -30,7 +31,7 @@ namespace SubastaMaestra.Data.Implements
         // Crear un nuevo producto
         public async Task<OperationResult<ProductCreateDTO>> CreateProductAsync(ProductCreateDTO productCreateDTO)
         {
-            //metood de servicio
+            //metodo de servicio
             var auction = _context.Auctions.Where(a=>a.Id==productCreateDTO.AuctionId).FirstOrDefault();
             if (auction != null)
             {
@@ -90,7 +91,12 @@ namespace SubastaMaestra.Data.Implements
                     FinalPrice = product.FinalPrice,
                     ImgUrl = product.ImgUrl,
                     InitialPrice = product.InitialPrice,
-                    NumberOfOffers = product.NumberOfOffers
+                    NumberOfOffers = product.NumberOfOffers,
+                    BuyerName = product.Buyer.Name,
+                    BuyerId = product.Buyer.Id,
+                    SellerName = product.Seller.Name,
+                    Id = product.Id,
+
                 };
                 return new OperationResult<ProductDTO> { Success = false, Value= productDTO };
                         
@@ -102,6 +108,8 @@ namespace SubastaMaestra.Data.Implements
 
             }
         } 
+
+        
 
         // Obtener todos los productos
         public async Task<OperationResult<List<ProductDTO>>> GetAllProductsAsync()

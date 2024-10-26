@@ -1,3 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace SubastaMaestra_Escritorio
 {
     public partial class Home : Form
@@ -37,7 +40,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonSubastasAbiertas_Click(object sender, EventArgs e)
         {
-            openChildFormInPanel(new SubastaAbiertas());
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<SubastaAbiertas>());
             //
             // Otro codigo...
             //
@@ -48,7 +51,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonCrearSubasta_Click(object sender, EventArgs e)
         {
-            openChildFormInPanel(new CrearSubasta());
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<Menu>());
             //
             // Otro codigo...
             //
@@ -57,6 +60,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonModificarSubasta_Click(object sender, EventArgs e)
         {
+            // openChildFormInPanel(Program.ServiceProvider.GetRequiredService<Editar>());
             //
             // Otro codigo...
             //
@@ -65,6 +69,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonProximasSubastas_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<FiltroSubasta>());
             //
             // Otro codigo...
             //
@@ -78,6 +83,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonListaProducto_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<ListaProductos>());
             //
             // Otro codigo...
             //
@@ -135,5 +141,13 @@ namespace SubastaMaestra_Escritorio
             childForm.Show();
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<ListaDeOferentes>());
+            //
+            // Otro codigo...
+            //
+            hideSubMenu();
+        }
     }
 }

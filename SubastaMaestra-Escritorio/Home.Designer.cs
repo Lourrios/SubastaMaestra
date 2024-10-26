@@ -40,13 +40,13 @@
             buttonProducto = new Button();
             panelSubastas = new Panel();
             buttonProximasSubastas = new Button();
-            buttonModificarSubasta = new Button();
             buttonCrearSubasta = new Button();
             buttonSubastasAbiertas = new Button();
             buttonSubasta = new Button();
             panelLogo = new Panel();
             panelHijo = new Panel();
             pictureBox1 = new PictureBox();
+            buttonOferentes = new Button();
             panelLateral.SuspendLayout();
             panelInforme.SuspendLayout();
             panelProducto.SuspendLayout();
@@ -144,6 +144,7 @@
             // 
             // panelProducto
             // 
+            panelProducto.Controls.Add(buttonOferentes);
             panelProducto.Controls.Add(buttonAprobarProducto);
             panelProducto.Controls.Add(buttonListaProducto);
             panelProducto.Dock = DockStyle.Top;
@@ -190,7 +191,7 @@
             buttonProducto.Padding = new Padding(10, 0, 0, 0);
             buttonProducto.Size = new Size(204, 45);
             buttonProducto.TabIndex = 3;
-            buttonProducto.Text = "Solicitudes De Productos";
+            buttonProducto.Text = "Administracion de Productos";
             buttonProducto.TextAlign = ContentAlignment.MiddleLeft;
             buttonProducto.UseVisualStyleBackColor = true;
             buttonProducto.Click += button1_Click;
@@ -198,10 +199,10 @@
             // panelSubastas
             // 
             panelSubastas.Controls.Add(buttonProximasSubastas);
-            panelSubastas.Controls.Add(buttonModificarSubasta);
             panelSubastas.Controls.Add(buttonCrearSubasta);
             panelSubastas.Controls.Add(buttonSubastasAbiertas);
             panelSubastas.Dock = DockStyle.Top;
+            panelSubastas.ForeColor = Color.FromArgb(64, 64, 0);
             panelSubastas.Location = new Point(10, 140);
             panelSubastas.Name = "panelSubastas";
             panelSubastas.Size = new Size(204, 111);
@@ -211,28 +212,15 @@
             // buttonProximasSubastas
             // 
             buttonProximasSubastas.Dock = DockStyle.Top;
-            buttonProximasSubastas.Location = new Point(0, 69);
+            buttonProximasSubastas.Location = new Point(0, 46);
             buttonProximasSubastas.Name = "buttonProximasSubastas";
             buttonProximasSubastas.Padding = new Padding(35, 0, 0, 0);
             buttonProximasSubastas.Size = new Size(204, 25);
             buttonProximasSubastas.TabIndex = 3;
-            buttonProximasSubastas.Text = "Proximas Subastas";
+            buttonProximasSubastas.Text = "Todas Subastas";
             buttonProximasSubastas.TextAlign = ContentAlignment.MiddleLeft;
             buttonProximasSubastas.UseVisualStyleBackColor = true;
             buttonProximasSubastas.Click += buttonProximasSubastas_Click;
-            // 
-            // buttonModificarSubasta
-            // 
-            buttonModificarSubasta.Dock = DockStyle.Top;
-            buttonModificarSubasta.Location = new Point(0, 46);
-            buttonModificarSubasta.Name = "buttonModificarSubasta";
-            buttonModificarSubasta.Padding = new Padding(35, 0, 0, 0);
-            buttonModificarSubasta.Size = new Size(204, 23);
-            buttonModificarSubasta.TabIndex = 2;
-            buttonModificarSubasta.Text = "Editar/eliminar Subastas";
-            buttonModificarSubasta.TextAlign = ContentAlignment.MiddleLeft;
-            buttonModificarSubasta.UseVisualStyleBackColor = true;
-            buttonModificarSubasta.Click += buttonModificarSubasta_Click;
             // 
             // buttonCrearSubasta
             // 
@@ -242,7 +230,7 @@
             buttonCrearSubasta.Padding = new Padding(35, 0, 0, 0);
             buttonCrearSubasta.Size = new Size(204, 23);
             buttonCrearSubasta.TabIndex = 1;
-            buttonCrearSubasta.Text = "Crear Subasta";
+            buttonCrearSubasta.Text = "Menu";
             buttonCrearSubasta.TextAlign = ContentAlignment.MiddleLeft;
             buttonCrearSubasta.UseVisualStyleBackColor = true;
             buttonCrearSubasta.Click += buttonCrearSubasta_Click;
@@ -287,6 +275,7 @@
             // panelHijo
             // 
             panelHijo.Anchor = AnchorStyles.None;
+            panelHijo.BorderStyle = BorderStyle.Fixed3D;
             panelHijo.Controls.Add(pictureBox1);
             panelHijo.Location = new Point(216, -1);
             panelHijo.Name = "panelHijo";
@@ -295,13 +284,26 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.BorderStyle = BorderStyle.Fixed3D;
             pictureBox1.Image = Properties.Resources.image;
-            pictureBox1.Location = new Point(155, 173);
+            pictureBox1.Location = new Point(82, 163);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(462, 147);
+            pictureBox1.Size = new Size(551, 147);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            // 
+            // buttonOferentes
+            // 
+            buttonOferentes.Dock = DockStyle.Top;
+            buttonOferentes.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonOferentes.Location = new Point(0, 46);
+            buttonOferentes.Name = "buttonOferentes";
+            buttonOferentes.Padding = new Padding(35, 0, 0, 0);
+            buttonOferentes.Size = new Size(204, 23);
+            buttonOferentes.TabIndex = 2;
+            buttonOferentes.Text = "Lista de Oferentes";
+            buttonOferentes.TextAlign = ContentAlignment.MiddleLeft;
+            buttonOferentes.UseVisualStyleBackColor = true;
+            buttonOferentes.Click += button1_Click_1;
             // 
             // Home
             // 
@@ -330,7 +332,6 @@
         private Panel panelLogo;
         private Panel panelSubastas;
         private Button buttonSubastasAbiertas;
-        private Button buttonModificarSubasta;
         private Button buttonCrearSubasta;
         private Button buttonProximasSubastas;
         private Panel panelProducto;
@@ -344,5 +345,6 @@
         private Button buttonInfoProdSinOferta;
         private Panel panelHijo;
         private PictureBox pictureBox1;
+        private Button buttonOferentes;
     }
 }

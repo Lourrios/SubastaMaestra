@@ -18,9 +18,12 @@ namespace SubastaMaestra.Models.Utils
 
             
             CreateMap<Product, ProductDTO>()
+                 .ForMember(dest => dest.SellerName, opt => opt.MapFrom(src => src.Seller.Name)) // Mapeo del nombre del vendedor
+                 .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.Buyer != null ? src.Buyer.Name : null)) // Mapeo del nombre del comprador (si existe)
                 .ReverseMap();// mapea desde Product a ProductDT y viceversa
             // mapea desde Product a ProductDT.
             CreateMap<ProductCreateDTO, Product>();
+
             //.ForMember(dest => dest.Buyer, opt => opt.Ignore()) // Ignora propiedades no mapeadas si es necesario
             //.ForMember(dest => dest.Auction, opt => opt.Ignore())
             //.ForMember(dest => dest.Seller, opt => opt.Ignore());
@@ -33,8 +36,10 @@ namespace SubastaMaestra.Models.Utils
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<UserCreateDTO, User>();
 
-            CreateMap<Bid, BidDTO>().ReverseMap();
+            CreateMap<Bid, BidderDTO>().ReverseMap();
             CreateMap<BidCreateDTO, Bid>();
+
+
 
         }
 

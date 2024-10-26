@@ -128,7 +128,7 @@ namespace SubastaMaestra.Data.Implements
             }
             catch (Exception ex)
             {
-                return new OperationResult<List<AuctionDTO>> { Success = true, Message="Error al buscar las subastas" };
+                return new OperationResult<List<AuctionDTO>> { Success = false, Message="Error al buscar las subastas" };
 
             }
         }
@@ -140,7 +140,7 @@ namespace SubastaMaestra.Data.Implements
             {
                 var today = DateTime.Now;
                 var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate >today)  // subasta habilitada o abierta
+                                     .Where(s => s.CurrentState == AuctionState.Active )  // subasta habilitada o abierta
                                      .ToListAsync();
                 if (auctions.Count == 0)
                 {

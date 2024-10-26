@@ -73,6 +73,7 @@
             buttonRefresh.TabIndex = 3;
             buttonRefresh.Text = "Refresh";
             buttonRefresh.UseVisualStyleBackColor = true;
+            buttonRefresh.Click += buttonRefresh_Click;
             // 
             // buttonSalir
             // 
@@ -93,7 +94,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(390, 304);
             dataGridView1.TabIndex = 2;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             // 
             // textBoxBuscarNombre
