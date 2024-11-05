@@ -23,6 +23,7 @@ namespace SubastaMaestra_Escritorio
             _mapper=mapper;
             CargarSubastas();
             dataGridViewSubastas.AutoGenerateColumns= true;
+            
         }
 
 

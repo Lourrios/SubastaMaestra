@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
+
+
 using SubastaMaestra.Data.Interfaces;
+using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,7 +64,8 @@ namespace SubastaMaestra_Escritorio
 
         private async Task LoadAllAuctions()
         {
-            var result = await _auctionRepository.GetAllAuctionsAsync();
+            //var result = await _auctionRepository.GetAllAuctionsAsync();
+            var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + "api/Auction/list");
             if (result.Success)
             {
                 dataGridViewSubastas.DataSource = result.Value;

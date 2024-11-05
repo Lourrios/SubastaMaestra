@@ -4,8 +4,8 @@ using SubastaMaestra.API.HostedServices;
 using SubastaMaestra.Data.Implements;
 using SubastaMaestra.Data.Interfaces;
 using SubastaMaestra.Data.Seeders;
-using SubastaMaestra.Data.SubastaMaestra.Data;
 using SubastaMaestra.Data;
+
 using SubastaMaestra.Models.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

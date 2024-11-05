@@ -5,8 +5,8 @@ using SubastaMaestra.Entities.Enums;
 
 namespace SubastaMaestra.Data
 {
-    namespace SubastaMaestra.Data
-    {
+  
+    
         public class SubastaContext : DbContext
         {
             public SubastaContext(DbContextOptions<SubastaContext> options) : base(options)
@@ -132,4 +132,4 @@ namespace SubastaMaestra.Data
         }
     }
 
-}
+

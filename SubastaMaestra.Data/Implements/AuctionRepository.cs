@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SubastaMaestra.Data.Interfaces;
-using SubastaMaestra.Data.SubastaMaestra.Data;
+using SubastaMaestra.Data;
 using SubastaMaestra.Entities.Core;
 using SubastaMaestra.Entities.Enums;
 using SubastaMaestra.Models.DTOs.Auction;
@@ -22,12 +22,12 @@ namespace SubastaMaestra.Data.Implements
     {
         private readonly SubastaContext _context;
         private readonly IMapper _mapper;
-        private readonly AuctionHandlerService _auctionHandlerService;
-        public AuctionRepository(SubastaContext context, IMapper mapper, AuctionHandlerService auctionHandlerService)
+        //private readonly AuctionHandlerService _auctionHandlerService;
+        public AuctionRepository(SubastaContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            _auctionHandlerService = auctionHandlerService;
+            //_auctionHandlerService = auctionHandlerService;
         }
 
         // Crear una nueva subasta
@@ -135,14 +135,13 @@ namespace SubastaMaestra.Data.Implements
         // Obtener subastas abiertas (Estado = 1)
         public async Task<OperationResult<List<AuctionDTO>>> GetAllOpenAuctionAsync()
         {
-            await _auctionHandlerService.ProcessAuctions(); // acutaliza los estados
+            //await _auctionHandlerService.ProcessAuctions(); // acutaliza los estados
 
             try
             {
                 var today = DateTime.Now;
                 var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Active )  // subasta habilitada o abierta
-                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate> today )  // subasta habilitada o abierta
+                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate >today)  // subasta habilitada o abierta
                                      .Include(s => s.Products)
                                      .ThenInclude(p => p.Seller)
                                      .ToListAsync();

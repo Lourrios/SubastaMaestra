@@ -1,13 +1,19 @@
 using Microsoft.Extensions.DependencyInjection;
+using SubastaMaestra.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SubastaMaestra_Escritorio
 {
+
+    
     public partial class Home : Form
-    {
-        public Home()
+    { 
+
+        private readonly AuctionHandlerService _handlerService;
+        public Home(AuctionHandlerService handlerService)
         {
             InitializeComponent();
+            _handlerService=handlerService;
         }
 
         private void hideSubMenu()
@@ -105,6 +111,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonInfoGanancias_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<InformeGanancias>());
             //
             // Otro codigo...
             //
@@ -113,6 +120,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonInfoProdVendidos_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<InformeProductosVendidos>());
             //
             // Otro codigo...
             //

@@ -4,9 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SubastaMaestra.Data.Implements;
 using SubastaMaestra.Data.Interfaces;
-using SubastaMaestra.Data.SubastaMaestra.Data;
+using SubastaMaestra.Data;
 using SubastaMaestra.Models.Utils;
-using AutoMapper;
+
+using SubastaMaestra.Models.DTOs.Auction;
 namespace SubastaMaestra_Escritorio
 {
     internal static class Program
@@ -49,7 +50,11 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<IBidRepository, BidRepository>();
                     services.AddTransient<IUserRepository, UserRepository>();
                     services.AddAutoMapper(typeof(AutoMapperProfiles));
-                   
+                    services.AddTransient<AuctionHandlerService>();
+                    services.AddTransient<AuctionDTO>();
+                    services.AddTransient<ISaleRepository, SaleRepository>();
+
+
                     services.AddTransient<Home>();
                     services.AddTransient<SubastaAbiertas>();
                     services.AddTransient<Menu>();
@@ -58,6 +63,8 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<Editar>();
                     services.AddTransient<CrearSubastaForm>();
                     services.AddTransient<ListaDeOferentes>();
+                    services.AddTransient<InformeGanancias>();
+                    services.AddTransient<InformeProductosVendidos>();
                 });
 
     }

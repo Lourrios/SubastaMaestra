@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AutoMapper;
+﻿using AutoMapper;
+using SubastaMaestra.Data;
 using SubastaMaestra.Data.Interfaces;
-using SubastaMaestra.Models;
-using SubastaMaestra.Models.DTOs.Auction;
 
 
 namespace SubastaMaestra_Escritorio
 {
     public partial class SubastaAbiertas : Form
     {
-
+        private readonly AuctionHandlerService _handlerService;
         private readonly IAuctionRepository _auctionRepository;
         private readonly IMapper _mapper;
-        public SubastaAbiertas(IAuctionRepository auctionRepository, IMapper mapper)
+        public SubastaAbiertas(IAuctionRepository auctionRepository, IMapper mapper, AuctionHandlerService auctionHandlerService)
         {
-
+            _handlerService = auctionHandlerService;
             _auctionRepository = auctionRepository;
             _mapper = mapper;
             InitializeComponent();
@@ -31,12 +21,13 @@ namespace SubastaMaestra_Escritorio
         }
         private async void Form2_Load_1(object sender, EventArgs e)
         {
+            dataGridView1.AutoGenerateColumns = false;
             // Crear columnas
-            dataGridView1.Columns.Add("NombreSubasta", "Nombre Subasta");
-            dataGridView1.Columns.Add("FechaInicio", "Fecha Inicio");
-            dataGridView1.Columns.Add("FechaCierre", "Fecha Cierre");
-            dataGridView1.Columns.Add("Estado", "Estado");
-            //dataGridView1.Columns.Add("CantidadProductos", "Cantidad Productos");
+            dataGridView1.Columns.Add("Title", "Nombre Subasta");
+            dataGridView1.Columns.Add("StarDate", "Fecha Inicio");
+            dataGridView1.Columns.Add("FinishDate", "Fecha Cierre");
+            dataGridView1.Columns.Add("State", "Estado");
+            dataGridView1.Columns.Add("CantidadProductos", "Cantidad Productos");
 
             //dataGridView1.Columns.Add("NumeroOfertas", "Número de Ofertas");
 
@@ -80,9 +71,9 @@ namespace SubastaMaestra_Escritorio
             {
                 MessageBox.Show("Error: " + ex.Message + "\nDetalles: " + ex.StackTrace);
             }
-        
 
-    }
+
+        }
         private void buttonSalir_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -168,10 +159,10 @@ namespace SubastaMaestra_Escritorio
                 DataGridViewRow row = dataGridView1.SelectedRows[0];
 
                 // Mostrar los detalles en el panel
-                labelDetalles.Text = $"Subasta: {row.Cells["NombreSubasta"].Value}" +
-                    $"\nFecha de Inicio: {row.Cells["FechaInicio"].Value}" +
-                    $"\nFecha de Cierre: {row.Cells["FechaCierre"].Value}" +
-                    $"\nEstado: {row.Cells["Estado"].Value}";
+                labelDetalles.Text = $"Subasta: {row.Cells["Title"].Value}" +
+                    $"\nFecha de Inicio: {row.Cells["StarDate"].Value}" +
+                    $"\nFecha de Cierre: {row.Cells["FinishDate"].Value}" +
+                    $"\nEstado: {row.Cells["State"].Value}";
                 //$"\nCantidad de Productos: {row.Cells["Cantidad de Productos"].Value}";
 
 
