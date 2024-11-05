@@ -23,10 +23,7 @@ namespace SubastaMaestra.API.Controllers
             _config = config;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(UserDTO userDTO)
         {
-            var result = await _userRepository.ValidateUserAsync(userDTO);
             var user = result.Value;
             if (user is null)
             {
