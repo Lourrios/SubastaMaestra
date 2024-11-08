@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SubastaMaestra.Entities.Core;
 using SubastaMaestra.Entities.Enums;
 
-namespace SubastaMaestra.Data
-{
-  
-    
+    namespace SubastaMaestra.Data
+    {
         public class SubastaContext : DbContext
         {
             public SubastaContext(DbContextOptions<SubastaContext> options) : base(options)
@@ -76,6 +74,18 @@ namespace SubastaMaestra.Data
                     .HasForeignKey(p => p.RolId)
                     .IsRequired();
 
+                modelBuilder.Entity<Notification>()
+                    .HasOne(n=>n.Product)
+                    .WithMany()
+                    .HasForeignKey(p => p.ProductoId)
+                    .IsRequired();
+
+                modelBuilder.Entity<Notification>()
+                    .HasOne(n => n.User)
+                    .WithMany(u=>u.Notifications)
+                    .HasForeignKey(p => p.UserId)
+                    .IsRequired();
+
                 // datos unicos
                 modelBuilder.Entity<ProductCategory>()
                     .HasIndex(u => u.Name)
@@ -129,6 +139,8 @@ namespace SubastaMaestra.Data
             public DbSet<Bid> Bids { get; set; }
             public DbSet<UserRol> Roles { get; set; }
             public DbSet<Sale> Sales { get; set; }
+            public DbSet<Notification> Notifications { get; set; }
+
         }
     }
 

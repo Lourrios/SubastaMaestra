@@ -14,10 +14,10 @@ namespace SubastaMaestra.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly  IUserRepository _userRepository;
         IConfiguration _config;
 
-        public LoginController(IUserRepository userRepository, IConfiguration config)
+        public LoginController( IUserRepository userRepository, IConfiguration config)
         {
             _userRepository = userRepository;
             _config = config;
@@ -30,7 +30,7 @@ namespace SubastaMaestra.API.Controllers
             var user = result.Value;
             if (user is null)
             {
-                return BadRequest(new { message = "credenciales invalidas" });
+                return BadRequest(new {message = "credenciales invalidas"});
 
             }
             string jwtToken = GenerateToken(user);

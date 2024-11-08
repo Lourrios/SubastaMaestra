@@ -32,6 +32,7 @@ builder.Services.AddScoped<IAuctionRepository, AuctionRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificacionRepository>();
 // servicio que maneja estado de rproductos y subastas
 builder.Services.AddScoped<AuctionHandlerService>();
 
@@ -89,15 +90,23 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
-app.UseSwagger();
+//// Configure the HTTP request pipeline.
+//app.UseSwagger();
 
-if (app.Environment.IsDevelopment())
+//if (app.Environment.IsDevelopment()) 
+//{
+//    app.UseSwaggerUI();
+//}
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
-    app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SubastaMaestra");
+    });
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection();// DESCOMENTAR ANTES DE PUBLICAR
 app.UseCors("AllowAll");
 app.UseStaticFiles();
 

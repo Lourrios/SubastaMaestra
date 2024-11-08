@@ -13,8 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 namespace SubastaMaestra.Data.Implements
 {
 
@@ -141,9 +139,10 @@ namespace SubastaMaestra.Data.Implements
             {
                 var today = DateTime.Now;
                 var auctions = await _context.Auctions
-                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate >today)  // subasta habilitada o abierta
-                                     .Include(s => s.Products)
-                                     .ThenInclude(p => p.Seller)
+                                     .Where(s => s.CurrentState == AuctionState.Active && s.FinishDate> today )  // subasta habilitada o abierta
+                                     .Include(s => s.Products
+                                        .Where(p => p.CurrentState.Equals(ProductState.Active)))
+                                         .ThenInclude(p => p.Seller )
                                      .ToListAsync();
                 if (auctions.Count == 0)
                 {
@@ -152,16 +151,16 @@ namespace SubastaMaestra.Data.Implements
                 }
 
                 List<AuctionDTO> auctionsDTO = new List<AuctionDTO>();
-                foreach (var auction in auctions)
+                 foreach (var auction in auctions)
                 {
                     var auc = _mapper.Map<AuctionDTO>(auction);
                     auc.State = auction.CurrentState; // falla el automaper
-                    //if( auction.Products.Any())
+                    //if( auction.products.any())
                     //{
-                    //    foreach (var p in auc.Products)
+                    //    foreach (var p in auc.products)
                     //    {
-                    //        var productDTO = _mapper.Map<ProductDTO>(p);
-                    //        auc.Products.Add(productDTO);
+                    //        var productdto = _mapper.map<productdto>(p);
+                    //        auc.products.add(productdto);
 
                     //    }
                     //}
@@ -189,6 +188,7 @@ namespace SubastaMaestra.Data.Implements
                 }
 
                 var auctionDTO = _mapper.Map<AuctionDTO>(auction);
+                auctionDTO.State = auction.CurrentState; // falla el automaper
                 var products = await _context.Products.Where(p => p.AuctionId == auction.Id).ToListAsync();
                 foreach (var product in products)
                 {
@@ -303,12 +303,12 @@ namespace SubastaMaestra.Data.Implements
             try
             {
                 var auctions = await _context.Auctions
-                                      .Where(s => s.CurrentState == AuctionState.Pending)  // subasta cerrada
+                                      .Where(s => s.CurrentState == AuctionState.Pending)  // subasta pendiente
                                       .ToListAsync();
 
                 if (auctions == null)
                 {
-                    return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas cerradas." };
+                    return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas pendientes." };
 
                 }
                 var auctionsDTO = new List<AuctionDTO>();
@@ -323,7 +323,7 @@ namespace SubastaMaestra.Data.Implements
                     });
                 }
 
-                return new OperationResult<List<AuctionDTO>> { Success = true, Value= auctionsDTO };
+                return new OperationResult<List<AuctionDTO>> { Success = true, Value = auctionsDTO };
 
 
             }
@@ -334,6 +334,44 @@ namespace SubastaMaestra.Data.Implements
             }
 
         }
+
+        public async Task<OperationResult<List<AuctionDTO>>> GetAllAuctionByCurrentStateAsync( AuctionState currentState)
+        {
+            await _auctionHandlerService.ProcessAuctions(); // acutaliza los estados
+
+            try
+            {
+                var auctions = new List<Auction>();
+                auctions = await _context.Auctions
+                                     .Where(s => s.CurrentState == currentState)  // subasta habilitada o abierta
+                                     .Include(s => s.Products)
+                                     .ThenInclude(p => p.Seller)
+                                     .ToListAsync();
+                if (auctions.Count == 0)
+                {
+                    return new OperationResult<List<AuctionDTO>> { Success = false, Message = "No hay subastas "+ currentState.ToString(), Value = new List<AuctionDTO>() };
+
+                }
+
+                List<AuctionDTO> auctionsDTO = new List<AuctionDTO>();
+                foreach (var auction in auctions)
+                {
+                    var auc = _mapper.Map<AuctionDTO>(auction);
+                    auc.State = auction.CurrentState; // falla el automaper
+                  
+                    auctionsDTO.Add(auc);
+
+                }
+                return new OperationResult<List<AuctionDTO>> { Success = true, Value = auctionsDTO };
+
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error a buscar las subastas" };
+
+            }
+        }
+    }
 
 
     }

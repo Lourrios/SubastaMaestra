@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SubastaMaestra.Models.DTOs;
 
 namespace SubastaMaestra.Data.Implements
 {
@@ -21,11 +22,14 @@ namespace SubastaMaestra.Data.Implements
         private readonly SubastaContext _context;
 
         private readonly IMapper _mapper;
+        private readonly INotificationRepository _notificationRepository;
 
-        public ProductRepository(SubastaContext context, IMapper mapper)
+
+        public ProductRepository(SubastaContext context, IMapper mapper, INotificationRepository notificationRepository)
         {
             _context = context;
             _mapper = mapper;
+            _notificationRepository = notificationRepository;
         }
 
         // Crear un nuevo producto
@@ -76,39 +80,48 @@ namespace SubastaMaestra.Data.Implements
                                      .Include(p => p.Seller)
                                      .Include(p => p.Auction)
                                      .FirstOrDefaultAsync(p => p.Id == id);
+                //var buyer = await _context.Users.Where(u=>u.Id == product.BuyerId).FirstOrDefaultAsync();
                 if (product == null) {
                     return new OperationResult<ProductDTO> { Success=false, Message= "Producto no encontrado."};
                 }
-                var productDTO = new ProductDTO
-                {
-                    AuctionId = product.AuctionId,
-                    Name = product.Name,
-                    CategoryId = (int)product.CategoryId,
-                    SellerId = product.SellerId,
-                    CreatedAt = product.CreatedAt,
-                    Condition = product.Condition,
-                    DeliveryCondition = product.DeliveryCondition,
-                    Description = product.Description,
-                    FinalPrice = product.FinalPrice,
-                    ImgUrl = product.ImgUrl,
-                    InitialPrice = product.InitialPrice,
-                    NumberOfOffers = product.NumberOfOffers,
-                    BuyerName = product.Buyer.Name,
-                    BuyerId = product.Buyer.Id,
-                    SellerName = product.Seller.Name,
-                    Id = product.Id,
+                var productDTO = _mapper.Map<ProductDTO>(product);
 
-                };
-                return new OperationResult<ProductDTO> { Success = false, Value= productDTO };
+                return new OperationResult<ProductDTO> { Success = true, Value= productDTO };
                         
             }
             catch (Exception ex)
             {
+               return new OperationResult<ProductDTO> { Success = false, Message = "Error al buscar el producto" };
+            }
+        }
 
-                return new OperationResult<ProductDTO> { Success = false, Message = "Error al buscar el producto" };
+        // productos sin ofertas
+        public async Task<OperationResult<List<ProductDTO>>> GetProductsWithoutBids()
+        {
+            try
+            {
+                // Obtener productos sin ofertas
+                var productosSinOfertas = await _context.Products
+                    .Where(p => !_context.Bids.Any(b => b.ProductId == p.Id))
+                    .ToListAsync();
+
+                if (productosSinOfertas == null)
+                {
+                    return new OperationResult<List<ProductDTO>> { Success = false, Message = "Productos no encontrados." };
+                }
+                var productsDTO = new List<ProductDTO>();
+                foreach( var product in productosSinOfertas)
+                {
+                    productsDTO.Add(_mapper.Map<ProductDTO>(product));
+                }
+                return new OperationResult<List<ProductDTO>> { Success = true, Value = productsDTO };
 
             }
-        } 
+            catch (Exception ex)
+            {
+                return new OperationResult<List<ProductDTO>>{ Success = false, Message = "Error al buscar los productos" };
+            }
+        }
 
         
 
@@ -197,9 +210,6 @@ namespace SubastaMaestra.Data.Implements
 
             }
         }
-
-       
-
         // Obtener productos por subasta
     public async Task<OperationResult<List<ProductDTO>>> GetProductsByAuctionAsync(int id_subasta)
     {
@@ -209,6 +219,7 @@ namespace SubastaMaestra.Data.Implements
                                       .Where(p => p.AuctionId == id_subasta)
                                       .Include(p => p.Category)
                                       .Include(p => p.Seller)
+                                      .Include(p => p.Buyer)
                                       .ToListAsync();
 
                 if (products == null)
@@ -258,6 +269,8 @@ namespace SubastaMaestra.Data.Implements
 
                 producto.CurrentState = ProductState.Disabled;  // 1 = habilitado
                 await _context.SaveChangesAsync();
+                // crear notificaion de producto habilitado
+                await _notificationRepository.CreateNotification(producto.SellerId, producto.Id, NotificationType.RejectedNotification);
                 return new OperationResult<int> { Success = true, Message = "Producto Deshabilidato" };
             }
             catch (Exception ex)
@@ -283,6 +296,9 @@ namespace SubastaMaestra.Data.Implements
                 }
                 producto.CurrentState = ProductState.Active;  // 1 = habilitado
                 await _context.SaveChangesAsync();
+                // crear notificaion de producto habilitado
+                await _notificationRepository.CreateNotification(producto.SellerId, producto.Id, NotificationType.AcceptedNotification);
+
                 return new OperationResult<int> { Success = true, Message = "Producto Habilidato" };
             }
             catch (Exception ex)
