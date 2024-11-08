@@ -58,7 +58,7 @@ namespace SubastaMaestra_Escritorio
 
             var (result2, error2) = await ApiHelper.GetAsync<List<SaleDTO>>(ApiUrl.LocalURL + "list");
 
-            if (result2 == null)
+            if (result2 != null)
             {
                 // todas las ventas
                 _prodVendidos = result2;
@@ -69,7 +69,27 @@ namespace SubastaMaestra_Escritorio
             }
             
         }
+        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedValue is int auctionId && _prodVendidos != null)
+            {
 
+
+                _ventasFiltradas = _prodVendidos.Where(sale =>sale.Product != null &&  sale.Product.AuctionId == auctionId).ToList();
+
+
+                if (_ventasFiltradas.Any())
+                {
+                    // Muestra los productos filtrados
+                    DisplayProducts();
+
+                    // Guarda el informe en PDF con los productos filtrados
+
+                }
+
+
+            }
+        }
         public async Task LoadSales()
         {
 
@@ -86,7 +106,7 @@ namespace SubastaMaestra_Escritorio
         {
             dataGridView1.DataSource = _ventasFiltradas.Select(p => new
             {
-                Producto = p.Product.Name,
+                Producto = p.Product?.Name,
                 Vendedor = p.Seller.Name,
                 FechaVenta = p.SaleDate,
                 MontoTotal = p.Amount,
@@ -120,9 +140,9 @@ namespace SubastaMaestra_Escritorio
                             doc.Add(new Paragraph(" ")); // Espacio
 
                             // Tabla PDF
-                            PdfPTable table = new PdfPTable(5);
+                            PdfPTable table = new PdfPTable(6);
                             table.WidthPercentage = 100;
-                            table.SetWidths(new float[] { 2, 2, 2, 2, 2 });
+                            table.SetWidths(new float[] { 2, 2, 2, 2, 2, 2 });
 
                             // Encabezados
                             table.AddCell("Producto");
@@ -135,12 +155,15 @@ namespace SubastaMaestra_Escritorio
                             // Datos de los productos
                             foreach (var product in _ventasFiltradas)
                             {
-                                table.AddCell(product.Product.Name);
-                                table.AddCell(product.Seller.Name);
-                                table.AddCell(product.SaleDate.ToString());
-                                var montoVendedor = product.Amount -product.Deduccion;
-                                table.AddCell(montoVendedor?.ToString("C"));
-                                table.AddCell(product.Deduccion?.ToString("C"));
+                                table.AddCell(product.Product?.Name ?? ""); // Producto
+                                table.AddCell(product.Seller?.Name ?? "");  // Vendedor
+                                table.AddCell(product.SaleDate.ToString("dd/MM/yyyy HH:mm:ss")); // Fecha de Venta
+                                table.AddCell(product.Amount.ToString("C")); // Monto Total
+
+                                var montoVendedor = product.Amount - product.Deduccion;
+                                table.AddCell(montoVendedor?.ToString("C")); // Monto Vendedor
+
+                                table.AddCell(product.Deduccion?.ToString("C")); // Monto Empresa
                             }
 
                             doc.Add(table);
@@ -157,26 +180,6 @@ namespace SubastaMaestra_Escritorio
             }
         }
 
-        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBox1.SelectedValue is int auctionId)
-            {
-
-
-                _ventasFiltradas = _prodVendidos.Where(sale => sale.Product.AuctionId == auctionId).ToList();
-
-
-                if (_ventasFiltradas.Any())
-                {
-                    // Muestra los productos filtrados
-                    DisplayProducts();
-
-                    // Guarda el informe en PDF con los productos filtrados
-
-                }
-
-
-            }
-        }
+       
     }
 }

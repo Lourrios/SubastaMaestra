@@ -84,41 +84,42 @@ namespace SubastaMaestra.Data.Implements
             }
         }
 
-       
+
 
         // obtener oferentes por producto
 
-        public async Task<OperationResult<List<BidderDTO>>> GetBiddersByProduct(int id_product)
-        {
-            try
-            {
-                var bidder = await _context.Bids.Where(b => b.ProductId == id_product)
-                .Include(b => b.Bidder)
-                .Select(b => new BidderDTO
-                {
-                    BidderId = b.BidderId,
-                    Name = b.Bidder.Name,
-                    OfferDate = b.OfferDate,
-                    Price = b.Price,
-                    PaymentMethod = b.PaymentMethods
-                })
-                .OrderBy(b => b.OfferDate)
-                .ToListAsync();
-                if (bidder.Count==0)
-                {
-                    return new OperationResult<List<BidderDTO>> { Success = true, Message = "No hay oferentes por este producto" };
+        //public async Task<OperationResult<List<BidderDTO>>> GetBiddersByProduct(int id_product)
+        //{
+        //    try
+        //    {
+        //        var bidder = await _context.Bids.Where(b => b.ProductId == id_product)
+        //        .Include(b => b.Bidder)
+        //        .Select(b => new BidderDTO
+        //        {
+        //            BidderId = b.BidderId,
+        //            Name = b.Bidder.Name,
+        //            OfferDate = b.OfferDate,
+        //            Price = b.Price,
+        //            PaymentMethod = b.PaymentMethods
+        //        })
+        //        .OrderBy(b => b.OfferDate)
+        //        .ToListAsync();
+        //        if (bidder.Count==0)
+        //        {
+        //            return new OperationResult<List<BidderDTO>> { Success = true, Message = "No hay oferentes por este producto" };
 
-                }
-                return new OperationResult<List<BidderDTO>> { Success = true, Value = bidder };
+        //        }
+        //        return new OperationResult<List<BidderDTO>> { Success = true, Value = bidder };
 
-            }
-            catch (Exception ex)
-            {
-                return new OperationResult<List<BidderDTO>> { Success = false, Message = ex.Message };
-            }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new OperationResult<List<BidderDTO>> { Success = false, Message = ex.Message };
+        //    }
+        //}
 
         // obtener catidad de ofertas
-        public async Task<OperationResult<List<BidDTO>>> ObtenerOfertasPorProducto(int id_producto)
+        public async Task<OperationResult<List<BidderDTO>>> ObtenerOfertasPorProducto(int id_producto)
         {
             try
             {

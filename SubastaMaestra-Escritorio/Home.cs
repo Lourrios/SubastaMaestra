@@ -129,6 +129,7 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonInfoProdSinOferta_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<InformeProductosSinOferta>());
             //
             // Otro codigo...
             //

@@ -53,6 +53,7 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<AuctionHandlerService>();
                     services.AddTransient<AuctionDTO>();
                     services.AddTransient<ISaleRepository, SaleRepository>();
+                    services.AddTransient<INotificationRepository, NotificacionRepository>();
 
 
                     services.AddTransient<Home>();
@@ -65,6 +66,7 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<ListaDeOferentes>();
                     services.AddTransient<InformeGanancias>();
                     services.AddTransient<InformeProductosVendidos>();
+                    services.AddTransient<InformeProductosSinOferta>();
                 });
 
     }

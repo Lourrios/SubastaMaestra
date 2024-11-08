@@ -337,7 +337,7 @@ namespace SubastaMaestra.Data.Implements
 
         public async Task<OperationResult<List<AuctionDTO>>> GetAllAuctionByCurrentStateAsync( AuctionState currentState)
         {
-            await _auctionHandlerService.ProcessAuctions(); // acutaliza los estados
+            //await _auctionHandlerService.ProcessAuctions(); // acutaliza los estados
 
             try
             {
@@ -375,4 +375,4 @@ namespace SubastaMaestra.Data.Implements
 
 
     }
-}
+

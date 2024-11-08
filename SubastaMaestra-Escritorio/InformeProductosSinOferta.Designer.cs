@@ -1,6 +1,6 @@
 ﻿namespace SubastaMaestra_Escritorio
 {
-    partial class InformeGanancias
+    partial class InformeProductosSinOferta
     {
         /// <summary>
         /// Required designer variable.
@@ -29,41 +29,39 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            buttonGenerar = new Button();
+            buttonGuardar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.GridColor = SystemColors.MenuBar;
-            dataGridView1.Location = new Point(52, 57);
+            dataGridView1.Location = new Point(26, 52);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(461, 363);
+            dataGridView1.Size = new Size(497, 372);
             dataGridView1.TabIndex = 0;
             // 
-            // buttonGenerar
+            // buttonGuardar
             // 
-            buttonGenerar.Location = new Point(519, 92);
-            buttonGenerar.Name = "buttonGenerar";
-            buttonGenerar.Size = new Size(107, 23);
-            buttonGenerar.TabIndex = 1;
-            buttonGenerar.Text = "Generar Informe";
-            buttonGenerar.UseVisualStyleBackColor = true;
-            buttonGenerar.Click += buttonGenerar_Click;
+            buttonGuardar.Location = new Point(543, 82);
+            buttonGuardar.Name = "buttonGuardar";
+            buttonGuardar.Size = new Size(110, 23);
+            buttonGuardar.TabIndex = 1;
+            buttonGuardar.Text = "Guardar Informe";
+            buttonGuardar.UseVisualStyleBackColor = true;
+            buttonGuardar.Click += buttonGuardar_Click;
             // 
-            // InformeGanancias
+            // InformeProductosSinOferta
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(702, 522);
-            Controls.Add(buttonGenerar);
+            Controls.Add(buttonGuardar);
             Controls.Add(dataGridView1);
-            Name = "InformeGanancias";
-            Text = "InformeGanancias";
-            Load += InformeGanancias_Load;
+            Name = "InformeProductosSinOferta";
+            Text = "InformeProductosSinOferta";
+            Load += InformeProductosSinOferta_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
@@ -71,6 +69,6 @@
         #endregion
 
         private DataGridView dataGridView1;
-        private Button buttonGenerar;
+        private Button buttonGuardar;
     }
 }

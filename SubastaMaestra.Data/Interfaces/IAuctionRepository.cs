@@ -20,7 +20,7 @@ namespace SubastaMaestra.Data.Interfaces
         Task<OperationResult<List<AuctionDTO>>> GetAllClosedAuctionAsync();// eliminar
         Task<OperationResult<List<AuctionDTO>>> GetAllClosedAuctionWithProductsAsync(); // eliminar
         Task<OperationResult<List<AuctionDTO>>> GetAllAuctionsAsync();
-        Task<OperationResult<List<AuctionDTO>>> GetAllPendingAuctionsAsync(); // eliminar
+        //Task<OperationResult<List<AuctionDTO>>> GetAllPendingAuctionsAsync(); // eliminar
 
         Task<OperationResult<List<AuctionDTO>>> GetAllAuctionByCurrentStateAsync(AuctionState currentState);
 
