@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using SubastaMaestra.Data.Implements;
 using SubastaMaestra.Data.Interfaces;
 using SubastaMaestra.Models.DTOs.Bid;
@@ -23,6 +24,7 @@ namespace SubastaMaestra.API.Controllers
         // crear un puja
 
         [HttpPost("create")]
+        [Authorize]
         public async Task<ActionResult> CreateBid(BidCreateDTO bidCreateDTO)
         {
             if (!ModelState.IsValid)
@@ -39,7 +41,7 @@ namespace SubastaMaestra.API.Controllers
         }
 
 
-        [HttpGet("/product/{id:int}")]
+        [HttpGet("/product/{id:int}/oferentes")]
         public async Task<ActionResult> GetBiddersByProduct(int id)
         {
             var result = await _bidRepository.GetBiddersByProduct(id);

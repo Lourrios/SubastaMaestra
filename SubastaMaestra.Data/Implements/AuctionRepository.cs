@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SubastaMaestra.Models.DTOs.Reports;
 
 namespace SubastaMaestra.Data.Implements
 {
@@ -49,6 +50,32 @@ namespace SubastaMaestra.Data.Implements
                 return new OperationResult<AuctionCreateDTO> { Success = false, Message = "Error al crear la subasta" };
             }
         }
+        // activar subasta
+
+        public async Task<OperationResult<int>> ActivateAuctionAsync(int id_subasta)
+        {
+            try
+            {
+                var subasta = await _context.Auctions.FindAsync(id_subasta);
+                if (subasta == null)
+                {
+                    return new OperationResult<int> { Success = false, Message = "Subasta no encontrada", Value = -1 };
+                }
+
+                subasta.CurrentState = AuctionState.Active;  
+                // desactivar productos
+                var op = await _context.SaveChangesAsync();
+
+                return new OperationResult<int> { Success = true, Message = "Subasta activada correctamente", Value = 1 };
+
+
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult<int> { Success = false, Message = "Error al cerrar la subasta.", Value = -1 };
+
+            }
+        }
 
         // Cerrar una subasta (actualizar su estado)
         public async Task<OperationResult<int>> CloseAuctionAsync(int id_subasta)
@@ -79,13 +106,13 @@ namespace SubastaMaestra.Data.Implements
         }
 
         // Modificar una subasta existente
-        public async Task<OperationResult<int>> EditAuctionAsync(AuctionDTO subasta, int Id)
+        public async Task<OperationResult<int>> EditAuctionAsync(AuctionUpdateDTO subasta,int id)
         {
 
 
             try
             {
-                var subastaExistente = await _context.Auctions.FindAsync(subasta.Id);
+                var subastaExistente = await _context.Auctions.FindAsync(id);
                 if (subastaExistente == null)
                 {
                     return new OperationResult<int> { Success = false, Message = "Subasta no encontrada.", Value = 0 };
@@ -368,9 +395,46 @@ namespace SubastaMaestra.Data.Implements
             catch (Exception ex)
             {
                 return new OperationResult<List<AuctionDTO>> { Success = false, Message = "Error a buscar las subastas" };
-
             }
         }
+
+        public async Task<List<AuctionReportDTO>> ObtenerSubastasMasPopulares(DateTime inicio, DateTime fin)
+        {
+            // Obtener las subastas filtradas y calcular la cantidad de ofertas
+            var subastasMasPopulares = await _context.Auctions
+                .Where(a => a.CurrentState == AuctionState.Closed &&
+                            a.FinishDate >= inicio && a.FinishDate <= fin)
+                .Select(a => new
+                {
+                    a.Id,
+                    a.Title,
+                    a.FinishDate,
+                    // Calcular el total de ofertas sumando las ofertas de cada producto
+                    TotalOfertas = a.Products.SelectMany(p => p.Bids).Count(),
+                    // Calcular el monto máximo de todas las ofertas de los productos
+                    HighestBidAmount = a.Products
+                        .SelectMany(p => p.Bids)
+                        .Max(b => (decimal?)b.Price) // Usar (decimal?) para manejar subastas sin ofertas
+                        ?? 0 // Si no hay ofertas, el monto máximo será 0
+                })
+                .OrderByDescending(a => a.TotalOfertas) // Ordenar por cantidad de ofertas
+                .Take(15) // Tomar las 15 subastas con mayor cantidad de ofertas
+                .ToListAsync();
+
+            // Transformar a DTO para la salida
+            return subastasMasPopulares.Select(a => new AuctionReportDTO
+            {
+                AuctionId = a.Id,
+                Title = a.Title,
+                FinishDate = a.FinishDate,
+                TotalOfertas = a.TotalOfertas,
+                HighestBidAmount = a.HighestBidAmount
+            }).ToList();
+        }
+
+
+
+
     }
 
 

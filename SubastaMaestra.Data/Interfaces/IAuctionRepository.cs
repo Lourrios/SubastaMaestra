@@ -1,6 +1,7 @@
 ﻿using SubastaMaestra.Entities.Core;
 using SubastaMaestra.Entities.Enums;
 using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.DTOs.Reports;
 using SubastaMaestra.Models.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace SubastaMaestra.Data.Interfaces
     {
         Task<OperationResult<AuctionCreateDTO>> CreateAuctionAsync(AuctionCreateDTO subasta);
         Task<OperationResult<int>> CloseAuctionAsync(int id_subasta);
-        Task<OperationResult<int>> EditAuctionAsync(AuctionDTO subasta, int id);
+        Task<OperationResult<int>> ActivateAuctionAsync(int idid_subasta);
+        Task<OperationResult<int>> EditAuctionAsync(AuctionUpdateDTO subasta, int id);
         Task<OperationResult<AuctionDTO>> GetAuctionByIdAsync(int id);
         Task<OperationResult<List<AuctionDTO>>> GetAllOpenAuctionAsync(); // eliminar
         Task<OperationResult<List<AuctionDTO>>> GetAllClosedAuctionAsync();// eliminar
@@ -31,5 +33,7 @@ namespace SubastaMaestra.Data.Interfaces
 
 
 
+        // repote
+        Task<List<AuctionReportDTO>> ObtenerSubastasMasPopulares(DateTime inicio, DateTime fin);
     }
 }

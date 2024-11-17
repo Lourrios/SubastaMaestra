@@ -5,6 +5,7 @@ using SubastaMaestra.Data.Interfaces;
 using SubastaMaestra.Entities.Core;
 using SubastaMaestra.Entities.Enums;
 using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.Utils;
 
 namespace SubastaMaestra.API.Controllers
 {
@@ -105,5 +106,35 @@ namespace SubastaMaestra.API.Controllers
             return BadRequest(result);
         }
 
+        [HttpPatch("edit/{id:int}")]
+        public async Task<IActionResult> UpdateAuction(AuctionUpdateDTO auction, int id)
+        {
+            var result = await _auctionRepository.EditAuctionAsync(auction, id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPatch("activar/{id:int}")]
+        public async Task<IActionResult> ActivateAuction( int id)
+        {
+            var result = await _auctionRepository.ActivateAuctionAsync( id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("masPopulares")]
+        public async Task<IActionResult> GetMostPopularAucions(DateTime start, DateTime finish)
+        {
+            var result = await _auctionRepository.ObtenerSubastasMasPopulares(start, finish);
+            if (result!= null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
