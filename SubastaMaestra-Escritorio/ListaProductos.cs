@@ -17,13 +17,15 @@ namespace SubastaMaestra_Escritorio
 {
     public partial class ListaProductos : Form
     {
-        private readonly IProductRepository _productRepository;
-        private readonly IMapper _mapper;
+        private  IProductRepository _productRepository;
+        private IBidRepository _bidRepository;
+        private  IMapper _mapper;
         private ProductDTO productDTO;
-        public ListaProductos(IProductRepository productRepository, IMapper mapper)
+        public ListaProductos(IProductRepository productRepository,IBidRepository bidRepository, IMapper mapper)
         {
             InitializeComponent();
             _productRepository = productRepository;
+            _bidRepository = bidRepository;
             _mapper = mapper;
             //CargarProducto();
 
@@ -33,6 +35,7 @@ namespace SubastaMaestra_Escritorio
         private async void ListaProductos_Load(object sender, EventArgs e)
         {
             // Configuración de las columnas del DataGridView
+            dataGridView1.Columns.Add("Id", "ID Producto");
             dataGridView1.Columns.Add("Name", "Nombre");
             dataGridView1.Columns.Add("InitialPrice", "Precio Inicial");
             dataGridView1.Columns.Add("FinalPrice", "Precio Final");
@@ -50,17 +53,19 @@ namespace SubastaMaestra_Escritorio
 
         private async Task CargarProducto()
         {
-            var resultado = await _productRepository.GetAllProductsAsync();
-            if (resultado.Success && resultado.Value != null)
+            // Usa ApiHelper para obtener la lista de productos
+            var resultado = await ApiHelper.GetListAsync<ProductDTO>(ApiUrl.LocalURL + "api/Product/list");
+
+            if (resultado != null)
             {
                 // Limpiar el DataGridView antes de agregar nuevos datos
                 dataGridView1.Rows.Clear();
 
                 // Iterar sobre los productos y agregarlos al DataGridView
-                foreach (var producto in resultado.Value)
+                foreach (var producto in resultado)
                 {
-                    // Agregar una fila al DataGridView con los datos del producto
                     dataGridView1.Rows.Add(
+                        producto.Id,  // Suponiendo que ProductId es la propiedad del ID
                         producto.Name,
                         producto.InitialPrice,
                         producto.FinalPrice,
@@ -69,14 +74,43 @@ namespace SubastaMaestra_Escritorio
                         producto.SellerId,
                         producto.AuctionId,
                         producto.Auction?.State.ToString(),
+
                         producto.Description
                     );
                 }
             }
             else
             {
-                MessageBox.Show("Error al cargar productos: " + resultado.Message);
+                MessageBox.Show("Error al cargar productos: No se pudo obtener la lista de productos.");
             }
+
+            //var resultado = await _productRepository.GetAllProductsAsync();
+            //if (resultado.Success && resultado.Value != null)
+            //{
+            //    // Limpiar el DataGridView antes de agregar nuevos datos
+            //    dataGridView1.Rows.Clear();
+
+            //    // Iterar sobre los productos y agregarlos al DataGridView
+            //    foreach (var producto in resultado.Value)
+            //    {
+            //        // Agregar una fila al DataGridView con los datos del producto
+            //        dataGridView1.Rows.Add(
+            //            producto.Name,
+            //            producto.InitialPrice,
+            //            producto.FinalPrice,
+            //            producto.Condition?.ToString(),
+            //            producto.CategoryId,
+            //            producto.SellerId,
+            //            producto.AuctionId,
+            //            producto.Auction?.State.ToString(),
+            //            producto.Description
+            //        );
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Error al cargar productos: " + resultado.Message);
+            //}
 
             //    var result = await _productRepository.GetProductsByAuctionAsync(auctionId);
 
@@ -93,5 +127,23 @@ namespace SubastaMaestra_Escritorio
             //}
 
         }
+
+        private void buttonOferentes_Click(object sender, EventArgs e)
+        {
+            
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                // Obtener el ID del producto de la fila seleccionada
+                int idProducto = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["Id"].Value);
+
+                // Crear instancia del formulario ListaDeOferentes y pasarle el ID del producto
+                var listaDeOferentesForm = new ListaDeOferentes(_bidRepository, idProducto);
+                listaDeOferentesForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Por favor seleccione un producto para ver las ofertas.");
+            }
+        }
     }
-}
+    }

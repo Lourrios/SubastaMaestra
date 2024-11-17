@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             panelLateral = new Panel();
+            buttonCerrarSesion = new Button();
             panelInforme = new Panel();
             buttonInfoProdSinOferta = new Button();
             buttonInfoProdVendidos = new Button();
             buttonInfoGanancias = new Button();
             buttonInforme = new Button();
             panelProducto = new Panel();
+            buttonOferentes = new Button();
             buttonAprobarProducto = new Button();
             buttonListaProducto = new Button();
             buttonProducto = new Button();
@@ -46,7 +48,6 @@
             panelLogo = new Panel();
             panelHijo = new Panel();
             pictureBox1 = new PictureBox();
-            buttonOferentes = new Button();
             panelLateral.SuspendLayout();
             panelInforme.SuspendLayout();
             panelProducto.SuspendLayout();
@@ -60,6 +61,7 @@
             panelLateral.AutoScroll = true;
             panelLateral.BackgroundImageLayout = ImageLayout.Center;
             panelLateral.BorderStyle = BorderStyle.FixedSingle;
+            panelLateral.Controls.Add(buttonCerrarSesion);
             panelLateral.Controls.Add(panelInforme);
             panelLateral.Controls.Add(buttonInforme);
             panelLateral.Controls.Add(panelProducto);
@@ -74,13 +76,23 @@
             panelLateral.Size = new Size(216, 561);
             panelLateral.TabIndex = 0;
             // 
+            // buttonCerrarSesion
+            // 
+            buttonCerrarSesion.Location = new Point(48, 525);
+            buttonCerrarSesion.Name = "buttonCerrarSesion";
+            buttonCerrarSesion.Size = new Size(113, 23);
+            buttonCerrarSesion.TabIndex = 7;
+            buttonCerrarSesion.Text = "CERRAR SESION";
+            buttonCerrarSesion.UseVisualStyleBackColor = true;
+            buttonCerrarSesion.Click += buttonCerrarSesion_Click;
+            // 
             // panelInforme
             // 
             panelInforme.Controls.Add(buttonInfoProdSinOferta);
             panelInforme.Controls.Add(buttonInfoProdVendidos);
             panelInforme.Controls.Add(buttonInfoGanancias);
             panelInforme.Dock = DockStyle.Top;
-            panelInforme.Location = new Point(10, 438);
+            panelInforme.Location = new Point(10, 407);
             panelInforme.Name = "panelInforme";
             panelInforme.Size = new Size(204, 97);
             panelInforme.TabIndex = 6;
@@ -132,7 +144,7 @@
             // 
             buttonInforme.Dock = DockStyle.Top;
             buttonInforme.FlatStyle = FlatStyle.Flat;
-            buttonInforme.Location = new Point(10, 393);
+            buttonInforme.Location = new Point(10, 362);
             buttonInforme.Name = "buttonInforme";
             buttonInforme.Padding = new Padding(10, 0, 0, 0);
             buttonInforme.Size = new Size(204, 45);
@@ -148,11 +160,25 @@
             panelProducto.Controls.Add(buttonAprobarProducto);
             panelProducto.Controls.Add(buttonListaProducto);
             panelProducto.Dock = DockStyle.Top;
-            panelProducto.Location = new Point(10, 296);
+            panelProducto.Location = new Point(10, 265);
             panelProducto.Name = "panelProducto";
             panelProducto.Size = new Size(204, 97);
             panelProducto.TabIndex = 4;
             panelProducto.Visible = false;
+            // 
+            // buttonOferentes
+            // 
+            buttonOferentes.Dock = DockStyle.Top;
+            buttonOferentes.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonOferentes.Location = new Point(0, 46);
+            buttonOferentes.Name = "buttonOferentes";
+            buttonOferentes.Padding = new Padding(35, 0, 0, 0);
+            buttonOferentes.Size = new Size(204, 23);
+            buttonOferentes.TabIndex = 2;
+            buttonOferentes.Text = "Lista de Oferentes";
+            buttonOferentes.TextAlign = ContentAlignment.MiddleLeft;
+            buttonOferentes.UseVisualStyleBackColor = true;
+            buttonOferentes.Click += button1_Click_1;
             // 
             // buttonAprobarProducto
             // 
@@ -186,7 +212,7 @@
             // 
             buttonProducto.Dock = DockStyle.Top;
             buttonProducto.FlatStyle = FlatStyle.Flat;
-            buttonProducto.Location = new Point(10, 251);
+            buttonProducto.Location = new Point(10, 220);
             buttonProducto.Name = "buttonProducto";
             buttonProducto.Padding = new Padding(10, 0, 0, 0);
             buttonProducto.Size = new Size(204, 45);
@@ -203,7 +229,7 @@
             panelSubastas.Controls.Add(buttonSubastasAbiertas);
             panelSubastas.Dock = DockStyle.Top;
             panelSubastas.ForeColor = Color.FromArgb(64, 64, 0);
-            panelSubastas.Location = new Point(10, 140);
+            panelSubastas.Location = new Point(10, 109);
             panelSubastas.Name = "panelSubastas";
             panelSubastas.Size = new Size(204, 111);
             panelSubastas.TabIndex = 2;
@@ -253,7 +279,7 @@
             // 
             buttonSubasta.Dock = DockStyle.Top;
             buttonSubasta.FlatStyle = FlatStyle.Flat;
-            buttonSubasta.Location = new Point(10, 95);
+            buttonSubasta.Location = new Point(10, 64);
             buttonSubasta.Name = "buttonSubasta";
             buttonSubasta.Padding = new Padding(10, 0, 0, 0);
             buttonSubasta.Size = new Size(204, 45);
@@ -265,11 +291,14 @@
             // 
             // panelLogo
             // 
-            panelLogo.BackColor = SystemColors.ControlDark;
+            panelLogo.BackColor = Color.White;
+            panelLogo.BackgroundImage = Properties.Resources.image;
+            panelLogo.BackgroundImageLayout = ImageLayout.Stretch;
+            panelLogo.BorderStyle = BorderStyle.Fixed3D;
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(10, 0);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(204, 95);
+            panelLogo.Size = new Size(204, 64);
             panelLogo.TabIndex = 0;
             // 
             // panelHijo
@@ -281,29 +310,17 @@
             panelHijo.Name = "panelHijo";
             panelHijo.Size = new Size(718, 561);
             panelHijo.TabIndex = 1;
+            panelHijo.Paint += panelHijo_Paint;
             // 
             // pictureBox1
             // 
+            pictureBox1.BorderStyle = BorderStyle.Fixed3D;
             pictureBox1.Image = Properties.Resources.image;
             pictureBox1.Location = new Point(82, 163);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(551, 147);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            // 
-            // buttonOferentes
-            // 
-            buttonOferentes.Dock = DockStyle.Top;
-            buttonOferentes.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonOferentes.Location = new Point(0, 46);
-            buttonOferentes.Name = "buttonOferentes";
-            buttonOferentes.Padding = new Padding(35, 0, 0, 0);
-            buttonOferentes.Size = new Size(204, 23);
-            buttonOferentes.TabIndex = 2;
-            buttonOferentes.Text = "Lista de Oferentes";
-            buttonOferentes.TextAlign = ContentAlignment.MiddleLeft;
-            buttonOferentes.UseVisualStyleBackColor = true;
-            buttonOferentes.Click += button1_Click_1;
             // 
             // Home
             // 
@@ -346,5 +363,6 @@
         private Panel panelHijo;
         private PictureBox pictureBox1;
         private Button buttonOferentes;
+        private Button buttonCerrarSesion;
     }
 }

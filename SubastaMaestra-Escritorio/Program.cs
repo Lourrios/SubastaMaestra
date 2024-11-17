@@ -8,6 +8,7 @@ using SubastaMaestra.Data;
 using SubastaMaestra.Models.Utils;
 
 using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.DTOs.User;
 namespace SubastaMaestra_Escritorio
 {
     internal static class Program
@@ -29,7 +30,7 @@ namespace SubastaMaestra_Escritorio
             var host = CreateHostBuilder().Build();
             ServiceProvider = host.Services;
 
-            Application.Run(ServiceProvider.GetRequiredService<Home>());
+            Application.Run(ServiceProvider.GetRequiredService<Login>());
 
         }
 
@@ -54,6 +55,10 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<AuctionDTO>();
                     services.AddTransient<ISaleRepository, SaleRepository>();
                     services.AddTransient<INotificationRepository, NotificacionRepository>();
+                    services.AddTransient<IUserRepository, UserRepository>();
+                    services.AddTransient<UserCreateDTO>();
+                    services.AddTransient<LoginRequestDTO>();
+                    services.AddTransient<AuctionUpdateDTO>();
 
 
                     services.AddTransient<Home>();
@@ -67,6 +72,9 @@ namespace SubastaMaestra_Escritorio
                     services.AddTransient<InformeGanancias>();
                     services.AddTransient<InformeProductosVendidos>();
                     services.AddTransient<InformeProductosSinOferta>();
+                    services.AddTransient<AprobacionDeProductos>();
+                    services.AddTransient<Register>();
+                    services.AddTransient<Login>();
                 });
 
     }

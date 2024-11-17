@@ -18,6 +18,7 @@ using iTextSharp.text.pdf;
 using System.IO;
 using SubastaMaestra.Models.DTOs.Sale;
 using SubastaMaestra.Models.Utils;
+using SubastaMaestra.Entities.Enums;
 
 namespace SubastaMaestra_Escritorio
 {
@@ -45,7 +46,10 @@ namespace SubastaMaestra_Escritorio
 
             if (result.Value != null)
             {
-                comboBox1.DataSource = result.Value; // result es List<AuctionDTO>
+                // Filtra solo las subastas cerradas(por ejemplo, con State = 0)
+                var closedAuctions = result.Value.Where(a => a.State == AuctionState.Closed).ToList();
+
+                comboBox1.DataSource = closedAuctions; // result es List<AuctionDTO>
                 comboBox1.DisplayMember = "Title";
                 comboBox1.ValueMember = "Id";
             }

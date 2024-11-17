@@ -12,6 +12,7 @@ namespace SubastaMaestra_Escritorio
         private List<AuctionDTO> listaSubastas = new List<AuctionDTO>();
         private AuctionDTO subastaSeleccionada;
         private AuctionCreateDTO subastaNueva;
+        private AuctionUpdateDTO subasta;
 
 
         public Menu(IAuctionRepository auctionRepository, IMapper mapper)
@@ -70,7 +71,15 @@ namespace SubastaMaestra_Escritorio
 
             if (dataGridViewSubastas.SelectedRows.Count >0)
             {
-                var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
+                var subastaSeleccionada = (AuctionUpdateDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
+
+                var subastaUpdateDTO = new AuctionUpdateDTO
+                {
+                    Id = subasta.Id,
+                    Title = subasta.Title,
+                    StartDate = subasta.StartDate,
+                    FinishDate = subasta.FinishDate
+                };
 
                 var editarSubastaForm = new Editar(_auctionRepository, subastaSeleccionada);
 
@@ -205,7 +214,7 @@ namespace SubastaMaestra_Escritorio
                     try
                     {
                         // Llamar al método para actualizar la subasta en el repositorio
-                        var resultado = await _auctionRepository.EditAuctionAsync(subastaSeleccionada, subastaSeleccionada.Id);
+                        var resultado = await _auctionRepository.EditAuctionAsync(subasta, subasta.Id);
 
                         // Verificar el resultado
                         if (resultado.Success)

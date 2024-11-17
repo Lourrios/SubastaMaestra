@@ -18,10 +18,12 @@ namespace SubastaMaestra_Escritorio
 
         private readonly IAuctionRepository _auctionRepository;
         private AuctionDTO _subastaSeleccionada;
-        public Editar(IAuctionRepository auctionRepository, AuctionDTO subastaSeleccionada)
+        private AuctionUpdateDTO _subasta;
+        public Editar(IAuctionRepository auctionRepository, AuctionUpdateDTO subasta)
         {
             _auctionRepository = auctionRepository;
-            _subastaSeleccionada = subastaSeleccionada;
+            _subasta = subasta;
+            
             InitializeComponent();
             CargarDatosSubasta();
         }
@@ -43,7 +45,7 @@ namespace SubastaMaestra_Escritorio
             _subastaSeleccionada.State = (AuctionState)comboBoxState.SelectedItem;
 
             // Llamar al repositorio para actualizar la subasta
-            var resultado = await _auctionRepository.EditAuctionAsync(_subastaSeleccionada,_subastaSeleccionada.Id);
+            var resultado = await _auctionRepository.EditAuctionAsync(_subasta,_subastaSeleccionada.Id);
 
             if (resultado.Success)
             {

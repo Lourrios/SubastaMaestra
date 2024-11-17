@@ -46,7 +46,7 @@
             // 
             // buttonGenerar
             // 
-            buttonGenerar.Location = new Point(519, 92);
+            buttonGenerar.Location = new Point(544, 94);
             buttonGenerar.Name = "buttonGenerar";
             buttonGenerar.Size = new Size(107, 23);
             buttonGenerar.TabIndex = 1;

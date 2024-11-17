@@ -34,8 +34,8 @@
             dataGridView1 = new DataGridView();
             textBoxBuscarNombre = new TextBox();
             label2 = new Label();
-            button1 = new Button();
-            button2 = new Button();
+            buttonDetalles = new Button();
+            buttonFinalizar = new Button();
             panel1 = new Panel();
             labelDetalles = new Label();
             groupBox1 = new GroupBox();
@@ -114,25 +114,25 @@
             label2.TabIndex = 6;
             label2.Text = "Buscar por nombre:";
             // 
-            // button1
+            // buttonDetalles
             // 
-            button1.Location = new Point(12, 500);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 7;
-            button1.Text = "Ver detalles";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            buttonDetalles.Location = new Point(12, 500);
+            buttonDetalles.Name = "buttonDetalles";
+            buttonDetalles.Size = new Size(75, 23);
+            buttonDetalles.TabIndex = 7;
+            buttonDetalles.Text = "Ver detalles";
+            buttonDetalles.UseVisualStyleBackColor = true;
+            buttonDetalles.Click += button1_Click;
             // 
-            // button2
+            // buttonFinalizar
             // 
-            button2.Location = new Point(140, 500);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 8;
-            button2.Text = "Finalizar Subasta";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            buttonFinalizar.Location = new Point(140, 500);
+            buttonFinalizar.Name = "buttonFinalizar";
+            buttonFinalizar.Size = new Size(75, 23);
+            buttonFinalizar.TabIndex = 8;
+            buttonFinalizar.Text = "Finalizar Subasta";
+            buttonFinalizar.UseVisualStyleBackColor = true;
+            buttonFinalizar.Click += button2_Click;
             // 
             // panel1
             // 
@@ -258,8 +258,8 @@
             Controls.Add(buttonFecha);
             Controls.Add(groupBox1);
             Controls.Add(panel1);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(buttonFinalizar);
+            Controls.Add(buttonDetalles);
             Controls.Add(buttonSalir);
             Controls.Add(buttonRefresh);
             Controls.Add(dataGridView1);
@@ -284,8 +284,8 @@
         private DataGridView dataGridView1;
         private TextBox textBoxBuscarNombre;
         private Label label2;
-        private Button button1;
-        private Button button2;
+        private Button buttonDetalles;
+        private Button buttonFinalizar;
         private Panel panel1;
         private GroupBox groupBox1;
         private NumericUpDown numericUpDown2;

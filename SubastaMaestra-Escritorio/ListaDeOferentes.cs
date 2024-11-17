@@ -15,14 +15,41 @@ namespace SubastaMaestra_Escritorio
     {
 
         private readonly IBidRepository _bidRepository;
-        public ListaDeOferentes(IBidRepository bidRepository)
+        private int _productId;
+        public ListaDeOferentes(IBidRepository bidRepository, int productId)
         {
 
             InitializeComponent();
             _bidRepository = bidRepository;
+            _productId = productId;
             dataGridViewOfertas.AutoGenerateColumns = true;
             //ConfigurarDataGridView();
+            LoadOffers();
         }
+
+        private async void LoadOffers()
+        {
+            var resultado = await _bidRepository.ObtenerOfertasPorProducto(_productId);
+
+
+            if (resultado.Success)
+            {
+                dataGridViewOfertas.DataSource = resultado.Value;
+                MessageBox.Show($"Se cargaron {resultado.Value.Count} ofertas.", "Resultado");
+            }
+            else
+            {
+                MessageBox.Show(resultado.Message, "Resultado");
+                dataGridViewOfertas.DataSource = null;
+            }
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
 
         //private void ConfigurarDataGridView()
         //{
@@ -55,32 +82,32 @@ namespace SubastaMaestra_Escritorio
         //}
 
 
-        private async void buttonOfertas_Click(object sender, EventArgs e)
-        {
-            int idProducto;
+        //private async void buttonOfertas_Click(object sender, EventArgs e)
+        //{
+        //    int idProducto;
 
-            // Validar que el ID del producto sea válido
-            if (!int.TryParse(textBoxIdProd.Text, out idProducto))
-            {
-                MessageBox.Show("Por favor ingrese un ID de producto válido.", "Error");
-                return;
-            }
+        //    // Validar que el ID del producto sea válido
+        //    if (!int.TryParse(textBoxIdProd.Text, out idProducto))
+        //    {
+        //        MessageBox.Show("Por favor ingrese un ID de producto válido.", "Error");
+        //        return;
+        //    }
 
-            // Llamar al servicio para obtener las ofertas por producto
-            var resultado = await _bidRepository.ObtenerOfertasPorProducto(idProducto);
+        //    // Llamar al servicio para obtener las ofertas por producto
+        //    var resultado = await _bidRepository.ObtenerOfertasPorProducto(idProducto);
 
-            if (resultado.Success)
-            {
-                // Cargar los datos en el DataGridView
-                dataGridViewOfertas.DataSource = resultado.Value;
-                MessageBox.Show($"Se cargaron {resultado.Value.Count} ofertas.", "Resultado");
-            }
-            else
-            {
-                MessageBox.Show(resultado.Message, "Resultado");
-                dataGridViewOfertas.DataSource = null; // Limpiar el DataGridView si no hay ofertas
-            }
-        }
+        //    if (resultado.Success)
+        //    {
+        //        // Cargar los datos en el DataGridView
+        //        dataGridViewOfertas.DataSource = resultado.Value;
+        //        MessageBox.Show($"Se cargaron {resultado.Value.Count} ofertas.", "Resultado");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show(resultado.Message, "Resultado");
+        //        dataGridViewOfertas.DataSource = null; // Limpiar el DataGridView si no hay ofertas
+        //    }
+        //}
     }
-    }
+}
 

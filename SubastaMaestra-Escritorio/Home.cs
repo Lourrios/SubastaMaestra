@@ -5,9 +5,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 namespace SubastaMaestra_Escritorio
 {
 
-    
+
     public partial class Home : Form
-    { 
+    {
 
         private readonly AuctionHandlerService _handlerService;
         public Home(AuctionHandlerService handlerService)
@@ -98,6 +98,8 @@ namespace SubastaMaestra_Escritorio
 
         private void buttonAprobarProducto_Click(object sender, EventArgs e)
         {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<AprobacionDeProductos>());
+
             //
             // Otro codigo...
             //
@@ -152,11 +154,23 @@ namespace SubastaMaestra_Escritorio
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<ListaDeOferentes>());
+            // openChildFormInPanel(Program.ServiceProvider.GetRequiredService<ListaDeOferentes>());
             //
             // Otro codigo...
             //
             hideSubMenu();
+        }
+
+        private void panelHijo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void buttonCerrarSesion_Click(object sender, EventArgs e)
+        {
+            var loginForm = Program.ServiceProvider.GetRequiredService<Login>();
+            loginForm.Show();
+            this.Close();
         }
     }
 }
