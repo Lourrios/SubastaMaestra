@@ -35,5 +35,6 @@ namespace SubastaMaestra.Data.Interfaces
 
         // repote
         Task<List<AuctionReportDTO>> ObtenerSubastasMasPopulares(DateTime inicio, DateTime fin);
+        Task<List<ProfitReportDTO>> GetProfitReport();
     }
 }
