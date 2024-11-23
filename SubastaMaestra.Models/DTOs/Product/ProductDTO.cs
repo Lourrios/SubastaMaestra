@@ -31,8 +31,8 @@ namespace SubastaMaestra.Models.DTOs.Product
         public String? BuyerName { get; set; }
         public int AuctionId { get; set; }
         //[JsonIgnore]
-       public AuctionDTO? Auction { get; set; }
-//public AuctionSummaryDTO? Auction { get; set; }
+     // public AuctionDTO? Auction { get; set; }
+         public AuctionSummaryDTO? Auction { get; set; }
         public DeliveryModes? DeliveryCondition { get; set; }
     }
 }

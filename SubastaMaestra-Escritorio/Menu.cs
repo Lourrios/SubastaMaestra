@@ -71,15 +71,9 @@ namespace SubastaMaestra_Escritorio
 
             if (dataGridViewSubastas.SelectedRows.Count >0)
             {
-                var subastaSeleccionada = (AuctionUpdateDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
+                var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
 
-                var subastaUpdateDTO = new AuctionUpdateDTO
-                {
-                    Id = subasta.Id,
-                    Title = subasta.Title,
-                    StartDate = subasta.StartDate,
-                    FinishDate = subasta.FinishDate
-                };
+             
 
                 var editarSubastaForm = new Editar(_auctionRepository, subastaSeleccionada);
 

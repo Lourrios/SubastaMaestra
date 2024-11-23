@@ -19,11 +19,11 @@ namespace SubastaMaestra_Escritorio
         private readonly IAuctionRepository _auctionRepository;
         private AuctionDTO _subastaSeleccionada;
         private AuctionUpdateDTO _subasta;
-        public Editar(IAuctionRepository auctionRepository, AuctionUpdateDTO subasta)
+        public Editar(IAuctionRepository auctionRepository, AuctionDTO subastaSeleccionada)
         {
             _auctionRepository = auctionRepository;
-            _subasta = subasta;
-            
+            _subastaSeleccionada = subastaSeleccionada;
+
             InitializeComponent();
             CargarDatosSubasta();
         }
@@ -39,13 +39,16 @@ namespace SubastaMaestra_Escritorio
 
         private async void buttonGuardar_Click(object sender, EventArgs e)
         {
-            _subastaSeleccionada.Title = textBoxTitle.Text;
-            _subastaSeleccionada.StartDate = dateTimePickerStar.Value;
-            _subastaSeleccionada.FinishDate = dateTimePickerFinish.Value;
-            _subastaSeleccionada.State = (AuctionState)comboBoxState.SelectedItem;
+
+            _subasta = new AuctionUpdateDTO();
+            _subasta.Id= _subastaSeleccionada.Id;
+            _subasta.Title = textBoxTitle.Text;
+            _subasta.StartDate = dateTimePickerStar.Value;
+            _subasta.FinishDate = dateTimePickerFinish.Value;
+            // _subasta.State = (AuctionState)comboBoxState.SelectedItem;
 
             // Llamar al repositorio para actualizar la subasta
-            var resultado = await _auctionRepository.EditAuctionAsync(_subasta,_subastaSeleccionada.Id);
+            var resultado = await _auctionRepository.EditAuctionAsync(_subasta, _subastaSeleccionada.Id);
 
             if (resultado.Success)
             {
@@ -57,6 +60,21 @@ namespace SubastaMaestra_Escritorio
             {
                 MessageBox.Show($"Error al actualizar la subasta: {resultado.Message}");
             }
+        }
+
+        private void Editar_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

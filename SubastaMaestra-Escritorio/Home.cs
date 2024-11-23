@@ -172,5 +172,33 @@ namespace SubastaMaestra_Escritorio
             loginForm.Show();
             this.Close();
         }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<InformeSubastaMasPopulares>());
+            //
+            // Otro codigo...
+            //
+            hideSubMenu();
+        }
+
+        private void panelLateral_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openChildFormInPanel(Program.ServiceProvider.GetRequiredService<InformeUsuariosMasActivos>());
+            //
+            // Otro codigo...
+            //
+            hideSubMenu();
+        }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

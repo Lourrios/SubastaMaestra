@@ -10,6 +10,8 @@ namespace SubastaMaestra.Models.DTOs.Auction
     {
         public int Id { get; set; }
         public string? Title { get; set; }
+
+        public AuctionDTO? State { get; set; }
     }
 
 }

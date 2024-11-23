@@ -41,7 +41,7 @@ namespace SubastaMaestra_Escritorio
             dataGridView1.Columns.Add("FinalPrice", "Precio Final");
             dataGridView1.Columns.Add("Condition", "Condición");
             dataGridView1.Columns.Add("Category", "Categoría");
-            dataGridView1.Columns.Add("Seller", "Vendedor");
+            dataGridView1.Columns.Add("SellerName", "Vendedor");
             dataGridView1.Columns.Add("AuctionNumber", "Numero de Subasta");
             dataGridView1.Columns.Add("AuctionState", "Estado de Subasta");
             dataGridView1.Columns.Add("Description", "Descripción");
@@ -71,9 +71,9 @@ namespace SubastaMaestra_Escritorio
                         producto.FinalPrice,
                         producto.Condition?.ToString(),
                         producto.CategoryId,
-                        producto.SellerId,
+                        producto.SellerName??"-",
                         producto.AuctionId,
-                        producto.Auction?.State.ToString(),
+                        producto.Auction?.State,
 
                         producto.Description
                     );
