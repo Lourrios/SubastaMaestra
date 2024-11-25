@@ -23,8 +23,7 @@ namespace SubastaMaestra.API.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreateAuctionAsync([FromBody] AuctionCreateDTO auctionDTO)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid) {
                 return BadRequest("Modelo invalido: "+ModelState);
             }
             var result = await _auctionRepository.CreateAuctionAsync(auctionDTO);
@@ -39,7 +38,7 @@ namespace SubastaMaestra.API.Controllers
                     Message = result,
                     ErrorCode = "InvalidtDate"
                 }
-        );
+            );
 
         }
 
@@ -100,6 +99,7 @@ namespace SubastaMaestra.API.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpPatch("activar/{id:int}")]
         public async Task<IActionResult> ActivateAuction( int id)
         {
@@ -110,6 +110,18 @@ namespace SubastaMaestra.API.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPatch("deshabilitar/{id:int}")]
+        public async Task<IActionResult> DisableAuction(int id)
+        {
+            var result = await _auctionRepository.DisableAuctionAsync(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet("masPopulares")]
         public async Task<IActionResult> GetMostPopularAucions(DateTime start, DateTime finish)
         {
