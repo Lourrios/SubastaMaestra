@@ -27,11 +27,48 @@ namespace SubastaMaestra_Escritorio
             _auctionRepository = auctionRepository;
             _mapper = mapper;
             InitializeComponent();
-            // Asociar el evento de cambio de selección del ComboBox
+           
+            ConfigurarDataGridView();
+
             comboBoxSubastas.SelectedIndexChanged += comboBoxSubastas_SelectedIndexChanged;
 
-            // Cargar los valores en el ComboBox
+         
             LoadComboBox();
+        }
+
+
+        private void ConfigurarDataGridView()
+        {
+            dataGridViewSubastas.AutoGenerateColumns = false;
+
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Title",
+                HeaderText = "Nombre",
+                Name = "Title",
+            });
+
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "StartDate",
+                HeaderText = "Fecha Inicio",
+                Name =  "StarDate"
+            });
+
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "FinishDate",
+                HeaderText = "Fecha Cierre",
+                Name = "FinishDate"
+
+            });
+
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "State",
+                HeaderText = "Estado",
+                Name ="State"
+            });
         }
 
 
@@ -64,6 +101,7 @@ namespace SubastaMaestra_Escritorio
 
         private async Task LoadAllAuctions()
         {
+
             //var result = await _auctionRepository.GetAllAuctionsAsync();
             var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + "api/Auction/list");
             if (result.Success)
@@ -78,7 +116,11 @@ namespace SubastaMaestra_Escritorio
 
         private async Task LoadOpenAuctions()
         {
-            var result = await _auctionRepository.GetAllOpenAuctionAsync();
+            string tipoSubasta = "Active";
+
+            //
+            var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + $"api/Auction/listByState/{tipoSubasta}"); 
+            //var result = await _auctionRepository.GetAllOpenAuctionAsync();
             if (result.Success)
             {
                 dataGridViewSubastas.DataSource = result.Value;
@@ -91,7 +133,11 @@ namespace SubastaMaestra_Escritorio
 
         private async Task LoadClosedAuctions()
         {
-            var result = await _auctionRepository.GetAllClosedAuctionAsync();
+
+            string tipoSubasta = "Closed";
+
+            var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + $"api/Auction/listByState/{tipoSubasta}");
+            //var result = await _auctionRepository.GetAllClosedAuctionAsync();
             if (result.Success)
             {
                 dataGridViewSubastas.DataSource = result.Value;
@@ -104,7 +150,11 @@ namespace SubastaMaestra_Escritorio
 
         private async Task LoadPendingAuctions()
         {
-            var result = await _auctionRepository.GetAllPendingAuctionsAsync();
+
+            string tipoSubasta = "Pending";
+
+            var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + $"api/Auction/listByState/{tipoSubasta}");
+            //var result = await _auctionRepository.GetAllPendingAuctionsAsync();
             if (result.Success)
             {
                 dataGridViewSubastas.DataSource = result.Value;

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using SubastaMaestra.Data;
 using SubastaMaestra.Data.Interfaces;
+using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.Utils;
 
 
 namespace SubastaMaestra_Escritorio
@@ -10,6 +12,7 @@ namespace SubastaMaestra_Escritorio
         private readonly AuctionHandlerService _handlerService;
         private readonly IAuctionRepository _auctionRepository;
         private readonly IMapper _mapper;
+        private AuctionDTO auctionDTO;
         public SubastaAbiertas(IAuctionRepository auctionRepository, IMapper mapper, AuctionHandlerService auctionHandlerService)
         {
             _handlerService = auctionHandlerService;
@@ -29,13 +32,7 @@ namespace SubastaMaestra_Escritorio
             dataGridView1.Columns.Add("State", "Estado");
             dataGridView1.Columns.Add("CantidadProductos", "Cantidad Productos");
 
-            //dataGridView1.Columns.Add("NumeroOfertas", "Número de Ofertas");
-
-            //// Datos ficticios
-            //dataGridView1.Rows.Add("Subasta Muebles", "02/10/2024", "12/10/2024", "3", "Activa", "2");
-            //dataGridView1.Rows.Add("Subasta Electrónica", "03/10/2024", "13/10/2024", "4", "Finalizada", "5");
-            //dataGridView1.Rows.Add("Subasta Inmuebles", "01/10/2024", "05/10/2024", "1", "Activa", "1");
-            //dataGridView1.Rows.Add("Subasta Arte", "06/10/2024", "14/10/2024", "2", "Activa", "4");
+            
 
             await CargarSubastasAbiertasAsync();
 
@@ -43,10 +40,19 @@ namespace SubastaMaestra_Escritorio
 
         private async Task CargarSubastasAbiertasAsync()
         {
+
+            string tipoSubasta = "Active";
             try
             {
                 // Llamamos al método del repositorio para obtener las subastas activas
-                var result = await _auctionRepository.GetAllOpenAuctionAsync();
+                var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + $"api/Auction/listByState/{tipoSubasta}");
+                //var result = await _auctionRepository.GetAllOpenAuctionAsync();
+
+                if (result == null)
+                {
+                    MessageBox.Show("El resultado de la API es nulo. Verifica la conexión o el formato de la respuesta.");
+                    return;
+                }
 
                 Console.WriteLine($"Cantidad de subastas obtenidas: {result.Value?.Count}");
 
@@ -122,19 +128,7 @@ namespace SubastaMaestra_Escritorio
             }
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
 
-            //if (dataGridView1.SelectedRows.Count > 0)
-            //{
-            //    DataGridViewRow row = dataGridView1.SelectedRows[0];
-            //    string nombreSubasta = row.Cells["NombreSubasta"].Value.ToString();
-            //    string condiciones = "Pago: Efectivo / Entrega: Envío a domicilio"; // Simulado
-
-            //    labelDetalles1.Text = $"Subasta: {nombreSubasta}" +
-            //        $"\nCondiciones: {condiciones}";
-            //}
-        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -219,6 +213,11 @@ namespace SubastaMaestra_Escritorio
         private async void buttonRefresh_Click(object sender, EventArgs e)
         {
             await CargarSubastasAbiertasAsync();
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

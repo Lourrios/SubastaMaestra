@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SubastaMaestra.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace SubastaMaestra.Models.DTOs.Auction
         public DateTime FinishDate { get; set; }
         [Required(ErrorMessage = "El campo fecha de inicio es requerido.")]
         public DateTime StartDate { get; set; }
+
+        public AuctionState state { get; set; }
 
 
     }

@@ -28,30 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AprobacionDeProductos));
             dataGridView1 = new DataGridView();
             buttonAceptar = new Button();
             buttonRechazar = new Button();
-            labelError = new Label();
             labelSolicitudes = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(55, 67);
+            dataGridView1.Location = new Point(12, 81);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(486, 289);
+            dataGridView1.Size = new Size(527, 361);
             dataGridView1.TabIndex = 0;
             // 
             // buttonAceptar
             // 
-            buttonAceptar.BackColor = Color.FromArgb(128, 255, 128);
+            buttonAceptar.BackColor = Color.White;
+            buttonAceptar.FlatAppearance.MouseDownBackColor = Color.FromArgb(192, 255, 192);
+            buttonAceptar.FlatAppearance.MouseOverBackColor = Color.Green;
+            buttonAceptar.FlatStyle = FlatStyle.Flat;
+            buttonAceptar.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonAceptar.ForeColor = Color.Black;
             buttonAceptar.Location = new Point(556, 81);
             buttonAceptar.Name = "buttonAceptar";
-            buttonAceptar.Size = new Size(75, 23);
+            buttonAceptar.Size = new Size(83, 28);
             buttonAceptar.TabIndex = 1;
             buttonAceptar.Text = "Aceptar";
             buttonAceptar.UseVisualStyleBackColor = false;
@@ -59,44 +64,43 @@
             // 
             // buttonRechazar
             // 
-            buttonRechazar.BackColor = Color.Red;
-            buttonRechazar.Location = new Point(556, 142);
+            buttonRechazar.BackColor = Color.White;
+            buttonRechazar.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            buttonRechazar.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 0, 0);
+            buttonRechazar.FlatStyle = FlatStyle.Flat;
+            buttonRechazar.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonRechazar.Location = new Point(556, 139);
             buttonRechazar.Name = "buttonRechazar";
-            buttonRechazar.Size = new Size(75, 23);
+            buttonRechazar.Size = new Size(83, 29);
             buttonRechazar.TabIndex = 2;
             buttonRechazar.Text = "Rechazar";
             buttonRechazar.UseVisualStyleBackColor = false;
             buttonRechazar.Click += buttonRechazar_Click_1;
             // 
-            // labelError
-            // 
-            labelError.AutoSize = true;
-            labelError.Location = new Point(567, 205);
-            labelError.Name = "labelError";
-            labelError.Size = new Size(38, 15);
-            labelError.TabIndex = 3;
-            labelError.Text = "Error: ";
-            // 
             // labelSolicitudes
             // 
             labelSolicitudes.AutoSize = true;
+            labelSolicitudes.Font = new Font("Century Gothic", 18F, FontStyle.Underline);
             labelSolicitudes.Location = new Point(228, 19);
             labelSolicitudes.Name = "labelSolicitudes";
-            labelSolicitudes.Size = new Size(64, 15);
+            labelSolicitudes.Size = new Size(311, 30);
             labelSolicitudes.TabIndex = 4;
-            labelSolicitudes.Text = "Solicitudes";
+            labelSolicitudes.Text = "Solicitudes de Productos:";
             // 
             // AprobacionDeProductos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.White;
+            ClientSize = new Size(664, 522);
             Controls.Add(labelSolicitudes);
-            Controls.Add(labelError);
             Controls.Add(buttonRechazar);
             Controls.Add(buttonAceptar);
             Controls.Add(dataGridView1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AprobacionDeProductos";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AprobacionDeProductos";
             Load += AprobacionDeProductos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -109,7 +113,6 @@
         private DataGridView dataGridView1;
         private Button buttonAceptar;
         private Button buttonRechazar;
-        private Label labelError;
         private Label labelSolicitudes;
     }
 }

@@ -69,5 +69,15 @@ namespace SubastaMaestra_Escritorio.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Imagen_de_WhatsApp_2024_11_23_a_las_16_01_35_e3e7a1a8 {
+            get {
+                object obj = ResourceManager.GetObject("Imagen de WhatsApp 2024-11-23 a las 16.01.35_e3e7a1a8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -23,40 +23,23 @@ namespace SubastaMaestra.API.Controllers
         [HttpPost("create")]
         public async Task<ActionResult> CreateAuctionAsync([FromBody] AuctionCreateDTO auctionDTO)
         {
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest("Modelo invalido: "+ModelState);
-            }
-            if (auctionDTO.StartDate < DateTime.Now) // validacion de fecha de inicio < fecha actual
-            {
-                return BadRequest(new
-                {
-                    Message = "La fecha de inicio no puede ser anterior a la fecha actual.",
-                    ErrorCode = "InvalidStartDate"
-                });
-            }
-            if (auctionDTO.FinishDate <= auctionDTO.StartDate) // validacion fecha fin > fecha inicio
-            {
-                return BadRequest(new
-                {
-                    Message = "La fecha de fin debe ser posterior a la fecha de inicio.",
-                    ErrorCode = "InvalidStartDate"
-                });
-            }
-            if (auctionDTO.StartDate.Date < DateTime.Now.AddDays(3))
-            {
-                return BadRequest(new
-                {
-                    Message = "La subasta debe terner almenos 3 días de antelación para inciar.",
-                    ErrorCode = "InvalidStartDate"
-                });
             }
             var result = await _auctionRepository.CreateAuctionAsync(auctionDTO);
             if (result.Success)
             {
-                return Ok(result.Message);
+                return Ok(result);
 
             }
-            return BadRequest("No se pudo crear la subasta");
+            return BadRequest(
+                new
+                {
+                    Message = result,
+                    ErrorCode = "InvalidtDate"
+                }
+        );
 
         }
 

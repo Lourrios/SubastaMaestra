@@ -20,6 +20,7 @@ using SubastaMaestra.Models.DTOs.Sale;
 using SubastaMaestra.Models.Utils;
 using SubastaMaestra.Entities.Enums;
 
+
 namespace SubastaMaestra_Escritorio
 {
     public partial class InformeProductosVendidos : Form
@@ -42,7 +43,7 @@ namespace SubastaMaestra_Escritorio
         {
 
             var (result, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + "api/Auction/list");
-            
+
 
             if (result.Value != null)
             {
@@ -60,7 +61,7 @@ namespace SubastaMaestra_Escritorio
             }
 
 
-            var (result2, error2) = await ApiHelper.GetAsync<List<SaleDTO>>(ApiUrl.LocalURL + "list");
+            var (result2, error2) = await ApiHelper.GetAsync<List<SaleDTO>>(ApiUrl.LocalURL + "api/Sale/list");
 
             if (result2 != null)
             {
@@ -71,7 +72,7 @@ namespace SubastaMaestra_Escritorio
             {
                 MessageBox.Show($"{error2}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -79,7 +80,7 @@ namespace SubastaMaestra_Escritorio
             {
 
 
-                _ventasFiltradas = _prodVendidos.Where(sale =>sale.Product != null &&  sale.Product.AuctionId == auctionId).ToList();
+                _ventasFiltradas = _prodVendidos.Where(sale => sale.Product != null &&  sale.Product.AuctionId == auctionId).ToList();
 
 
                 if (_ventasFiltradas.Any())
@@ -102,7 +103,7 @@ namespace SubastaMaestra_Escritorio
         private async void buttonGuardar_Click(object sender, EventArgs e)
         {
             GuardarInformePDF();
-          
+
         }
 
 
@@ -135,18 +136,42 @@ namespace SubastaMaestra_Escritorio
                     {
                         using (FileStream fs = new FileStream(sfd.FileName, FileMode.Create))
                         {
-                            Document doc = new Document(PageSize.A4);
+                            Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
                             PdfWriter.GetInstance(doc, fs);
                             doc.Open();
 
-                            // Título
-                            doc.Add(new Paragraph("Informe de Productos Vendidos"));
-                            doc.Add(new Paragraph(" ")); // Espacio
+                            // Agregar logo de la empresa
+                            string logoPath = "C://Escritorio//SubastaMaestra-master//SubastaMaestra//logo//image.png";
+                            if (File.Exists(logoPath))
+                            {
+                                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(logoPath);
+                                logo.ScaleAbsoluteWidth(100);
+                                logo.ScaleAbsoluteHeight(50);
+                                logo.Alignment = Element.ALIGN_LEFT;
+                                doc.Add(logo);
+                            }
 
-                            // Tabla PDF
+                            // Agregar información de la empresa
+                            doc.Add(new Paragraph("Puja Maestra S.A.", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16)));
+                            doc.Add(new Paragraph("CUIT: 30-12345678-9"));
+                            doc.Add(new Paragraph("Tipo de Sociedad: Sociedad Anónima (S.A.)"));
+                            doc.Add(new Paragraph("Dirección: Calle Ejemplo 123, Ciudad Ejemplo"));
+                            doc.Add(new Paragraph("Teléfono: +54 9 1234-567890"));
+                            doc.Add(new Paragraph("Correo Electrónico: contacto@pujamaestra.com"));
+                            doc.Add(new Paragraph("\n"));
+
+                            // Título del informe
+                            doc.Add(new Paragraph("Informe de Productos Vendidos", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14)));
+                            doc.Add(new Paragraph("Fecha de Generación: " + DateTime.Now.ToString("dd/MM/yyyy")));
+                            doc.Add(new Paragraph("\n"));
+
+                            // Crear tabla de datos con marco
                             PdfPTable table = new PdfPTable(6);
                             table.WidthPercentage = 100;
-                            table.SetWidths(new float[] { 2, 2, 2, 2, 2, 2 });
+                            table.SetWidths(new float[] { 2, 2, 2, 1.5f, 2, 2 });
+                            table.SpacingBefore = 10;
+                            table.SpacingAfter = 10;
+                            table.DefaultCell.Border = iTextSharp.text.Rectangle.BOX;
 
                             // Encabezados
                             table.AddCell("Producto");
@@ -156,21 +181,25 @@ namespace SubastaMaestra_Escritorio
                             table.AddCell("Monto Vendedor");
                             table.AddCell("Monto Empresa");
 
-                            // Datos de los productos
+                            // Agregar datos a la tabla
                             foreach (var product in _ventasFiltradas)
                             {
                                 table.AddCell(product.Product?.Name ?? ""); // Producto
                                 table.AddCell(product.Seller?.Name ?? "");  // Vendedor
                                 table.AddCell(product.SaleDate.ToString("dd/MM/yyyy HH:mm:ss")); // Fecha de Venta
-                                table.AddCell(product.Amount.ToString("C")); // Monto Total
+                                table.AddCell($"${product.Amount.ToString("N2")}"); // Monto Total
 
                                 var montoVendedor = product.Amount - product.Deduccion;
-                                table.AddCell(montoVendedor?.ToString("C")); // Monto Vendedor
-
-                                table.AddCell(product.Deduccion?.ToString("C")); // Monto Empresa
+                                table.AddCell($"${montoVendedor?.ToString("N2")}");
+                                table.AddCell($"${product.Deduccion?.ToString("N2")}");
                             }
 
                             doc.Add(table);
+
+                            // Agregar pie de página
+                            doc.Add(new Paragraph("\nEste informe cumple con los requisitos para ser presentado.", FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.GRAY)));
+                            doc.Add(new Paragraph("Puja Maestra S.A.", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 10, BaseColor.GRAY)));
+
                             doc.Close();
                         }
 
@@ -183,7 +212,5 @@ namespace SubastaMaestra_Escritorio
                 }
             }
         }
-
-       
     }
 }

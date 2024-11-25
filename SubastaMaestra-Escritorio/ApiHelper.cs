@@ -15,6 +15,86 @@ namespace SubastaMaestra_Escritorio
     {
         private static readonly HttpClient _httpClient = new();
 
+        public static async Task<(bool success,string message)> PostLoginAsync(string url, object objectToPass)
+        {
+            try
+            {
+                var jsonContent = JsonConvert.SerializeObject(objectToPass);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(url, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, "Inicio Exitoso");
+                }
+                else
+                {
+                    // Operation failed
+                    string errorMessage = "Operation failed. Status code: " + response.StatusCode;
+                    return (false,errorMessage) ;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred: " + ex.Message;
+                return (false, errorMessage);
+            }
+        }
+
+
+        public static async Task<(bool success,string message)> PostCreateAuctionAsync(string url, object objectToPass)
+        {
+            try
+            {
+                var jsonContent = JsonConvert.SerializeObject(objectToPass);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync(url, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true,"Creacion Correcta");
+                }
+                else
+                {
+                    // Operation failed
+                    string errorMessage = "Operation failed. Status code: " + response.StatusCode;
+                    return (false,errorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred: " + ex.Message;
+                return (false,errorMessage);
+            }
+        }
+
+
+        public static async Task<(T result, string errorMessage)>PostEditarAuctionAsync<T>(string url, object objectToPass)
+        {
+            try
+            {
+                var jsonContent = JsonConvert.SerializeObject(objectToPass);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PatchAsync(url, content);
+                if (response.IsSuccessStatusCode)
+                {
+                   
+                    T result = typeof(T) == typeof(string) ? (T)(object)content : JsonConvert.DeserializeObject<T>(jsonContent);
+
+                    return (result, null);
+                }
+                else
+                {
+                    return (default(T), "Error: " + response.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it or return an error message.
+                string errorMessage = "An error occurred: " + ex.Message;
+                return (default(T), "An error occurred: " + ex.Message);
+            }
+        }
 
         public static async Task<string> PostAsync(string url, object objectToPass)
         {

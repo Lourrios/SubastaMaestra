@@ -39,14 +39,12 @@
             buttonInfoGanancias = new Button();
             buttonInforme = new Button();
             panelProducto = new Panel();
-            buttonOferentes = new Button();
             buttonAprobarProducto = new Button();
             buttonListaProducto = new Button();
             buttonProducto = new Button();
             panelSubastas = new Panel();
             buttonProximasSubastas = new Button();
             buttonCrearSubasta = new Button();
-            buttonSubastasAbiertas = new Button();
             buttonSubasta = new Button();
             panelLogo = new Panel();
             panelHijo = new Panel();
@@ -76,7 +74,7 @@
             panelLateral.Location = new Point(0, 0);
             panelLateral.Name = "panelLateral";
             panelLateral.Padding = new Padding(10, 0, 0, 0);
-            panelLateral.Size = new Size(238, 561);
+            panelLateral.Size = new Size(249, 561);
             panelLateral.TabIndex = 0;
             // 
             // buttonCerrarSesion
@@ -103,7 +101,7 @@
             panelInforme.Dock = DockStyle.Top;
             panelInforme.Location = new Point(10, 355);
             panelInforme.Name = "panelInforme";
-            panelInforme.Size = new Size(226, 164);
+            panelInforme.Size = new Size(237, 164);
             panelInforme.TabIndex = 6;
             panelInforme.Visible = false;
             // 
@@ -118,7 +116,7 @@
             button2.Location = new Point(0, 92);
             button2.Name = "button2";
             button2.Padding = new Padding(20, 0, 0, 0);
-            button2.Size = new Size(226, 23);
+            button2.Size = new Size(237, 23);
             button2.TabIndex = 4;
             button2.Text = "Informe De Usuarios Mas Activos";
             button2.TextAlign = ContentAlignment.MiddleLeft;
@@ -136,7 +134,7 @@
             button1.Location = new Point(0, 69);
             button1.Name = "button1";
             button1.Padding = new Padding(20, 0, 0, 0);
-            button1.Size = new Size(226, 23);
+            button1.Size = new Size(237, 23);
             button1.TabIndex = 3;
             button1.Text = "Informe De Subasta Mas Populares";
             button1.TextAlign = ContentAlignment.MiddleLeft;
@@ -154,7 +152,7 @@
             buttonInfoProdSinOferta.Location = new Point(0, 46);
             buttonInfoProdSinOferta.Name = "buttonInfoProdSinOferta";
             buttonInfoProdSinOferta.Padding = new Padding(20, 0, 0, 0);
-            buttonInfoProdSinOferta.Size = new Size(226, 23);
+            buttonInfoProdSinOferta.Size = new Size(237, 23);
             buttonInfoProdSinOferta.TabIndex = 2;
             buttonInfoProdSinOferta.Text = "Informe De Productos Sin Ofertar";
             buttonInfoProdSinOferta.TextAlign = ContentAlignment.MiddleLeft;
@@ -172,7 +170,7 @@
             buttonInfoProdVendidos.Location = new Point(0, 23);
             buttonInfoProdVendidos.Name = "buttonInfoProdVendidos";
             buttonInfoProdVendidos.Padding = new Padding(20, 0, 0, 0);
-            buttonInfoProdVendidos.Size = new Size(226, 23);
+            buttonInfoProdVendidos.Size = new Size(237, 23);
             buttonInfoProdVendidos.TabIndex = 1;
             buttonInfoProdVendidos.Text = "Informe De Productos Vendidos";
             buttonInfoProdVendidos.TextAlign = ContentAlignment.MiddleLeft;
@@ -190,7 +188,7 @@
             buttonInfoGanancias.Location = new Point(0, 0);
             buttonInfoGanancias.Name = "buttonInfoGanancias";
             buttonInfoGanancias.Padding = new Padding(20, 0, 0, 0);
-            buttonInfoGanancias.Size = new Size(226, 23);
+            buttonInfoGanancias.Size = new Size(237, 23);
             buttonInfoGanancias.TabIndex = 0;
             buttonInfoGanancias.Text = "Informe d Ganancias";
             buttonInfoGanancias.TextAlign = ContentAlignment.MiddleLeft;
@@ -207,7 +205,7 @@
             buttonInforme.Location = new Point(10, 310);
             buttonInforme.Name = "buttonInforme";
             buttonInforme.Padding = new Padding(10, 0, 0, 0);
-            buttonInforme.Size = new Size(226, 45);
+            buttonInforme.Size = new Size(237, 45);
             buttonInforme.TabIndex = 5;
             buttonInforme.Text = "Informes de Gestion";
             buttonInforme.TextAlign = ContentAlignment.MiddleLeft;
@@ -216,33 +214,14 @@
             // 
             // panelProducto
             // 
-            panelProducto.Controls.Add(buttonOferentes);
             panelProducto.Controls.Add(buttonAprobarProducto);
             panelProducto.Controls.Add(buttonListaProducto);
             panelProducto.Dock = DockStyle.Top;
             panelProducto.Location = new Point(10, 233);
             panelProducto.Name = "panelProducto";
-            panelProducto.Size = new Size(226, 77);
+            panelProducto.Size = new Size(237, 77);
             panelProducto.TabIndex = 4;
             panelProducto.Visible = false;
-            // 
-            // buttonOferentes
-            // 
-            buttonOferentes.Dock = DockStyle.Top;
-            buttonOferentes.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 224, 224);
-            buttonOferentes.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            buttonOferentes.FlatStyle = FlatStyle.Flat;
-            buttonOferentes.Font = new Font("Century Gothic", 9F);
-            buttonOferentes.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonOferentes.Location = new Point(0, 46);
-            buttonOferentes.Name = "buttonOferentes";
-            buttonOferentes.Padding = new Padding(35, 0, 0, 0);
-            buttonOferentes.Size = new Size(226, 23);
-            buttonOferentes.TabIndex = 2;
-            buttonOferentes.Text = "Lista de Oferentes";
-            buttonOferentes.TextAlign = ContentAlignment.MiddleLeft;
-            buttonOferentes.UseVisualStyleBackColor = true;
-            buttonOferentes.Click += button1_Click_1;
             // 
             // buttonAprobarProducto
             // 
@@ -255,7 +234,7 @@
             buttonAprobarProducto.Location = new Point(0, 23);
             buttonAprobarProducto.Name = "buttonAprobarProducto";
             buttonAprobarProducto.Padding = new Padding(35, 0, 0, 0);
-            buttonAprobarProducto.Size = new Size(226, 23);
+            buttonAprobarProducto.Size = new Size(237, 23);
             buttonAprobarProducto.TabIndex = 1;
             buttonAprobarProducto.Text = "Aprobacion De Productos";
             buttonAprobarProducto.TextAlign = ContentAlignment.MiddleLeft;
@@ -273,7 +252,7 @@
             buttonListaProducto.Location = new Point(0, 0);
             buttonListaProducto.Name = "buttonListaProducto";
             buttonListaProducto.Padding = new Padding(35, 0, 0, 0);
-            buttonListaProducto.Size = new Size(226, 23);
+            buttonListaProducto.Size = new Size(237, 23);
             buttonListaProducto.TabIndex = 0;
             buttonListaProducto.Text = "Lista de Productos";
             buttonListaProducto.TextAlign = ContentAlignment.MiddleLeft;
@@ -290,7 +269,7 @@
             buttonProducto.Location = new Point(10, 188);
             buttonProducto.Name = "buttonProducto";
             buttonProducto.Padding = new Padding(10, 0, 0, 0);
-            buttonProducto.Size = new Size(226, 45);
+            buttonProducto.Size = new Size(237, 45);
             buttonProducto.TabIndex = 3;
             buttonProducto.Text = "Administracion de Productos";
             buttonProducto.TextAlign = ContentAlignment.MiddleLeft;
@@ -301,12 +280,11 @@
             // 
             panelSubastas.Controls.Add(buttonProximasSubastas);
             panelSubastas.Controls.Add(buttonCrearSubasta);
-            panelSubastas.Controls.Add(buttonSubastasAbiertas);
             panelSubastas.Dock = DockStyle.Top;
             panelSubastas.ForeColor = Color.FromArgb(64, 64, 0);
             panelSubastas.Location = new Point(10, 109);
             panelSubastas.Name = "panelSubastas";
-            panelSubastas.Size = new Size(226, 79);
+            panelSubastas.Size = new Size(237, 79);
             panelSubastas.TabIndex = 2;
             panelSubastas.Visible = false;
             // 
@@ -317,10 +295,10 @@
             buttonProximasSubastas.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             buttonProximasSubastas.FlatStyle = FlatStyle.Flat;
             buttonProximasSubastas.Font = new Font("Century Gothic", 9F);
-            buttonProximasSubastas.Location = new Point(0, 46);
+            buttonProximasSubastas.Location = new Point(0, 23);
             buttonProximasSubastas.Name = "buttonProximasSubastas";
             buttonProximasSubastas.Padding = new Padding(35, 0, 0, 0);
-            buttonProximasSubastas.Size = new Size(226, 25);
+            buttonProximasSubastas.Size = new Size(237, 25);
             buttonProximasSubastas.TabIndex = 3;
             buttonProximasSubastas.Text = "Todas Subastas";
             buttonProximasSubastas.TextAlign = ContentAlignment.MiddleLeft;
@@ -334,33 +312,15 @@
             buttonCrearSubasta.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
             buttonCrearSubasta.FlatStyle = FlatStyle.Flat;
             buttonCrearSubasta.Font = new Font("Century Gothic", 9F);
-            buttonCrearSubasta.Location = new Point(0, 23);
+            buttonCrearSubasta.Location = new Point(0, 0);
             buttonCrearSubasta.Name = "buttonCrearSubasta";
             buttonCrearSubasta.Padding = new Padding(35, 0, 0, 0);
-            buttonCrearSubasta.Size = new Size(226, 23);
+            buttonCrearSubasta.Size = new Size(237, 23);
             buttonCrearSubasta.TabIndex = 1;
-            buttonCrearSubasta.Text = "Menu";
+            buttonCrearSubasta.Text = "Administracion";
             buttonCrearSubasta.TextAlign = ContentAlignment.MiddleLeft;
             buttonCrearSubasta.UseVisualStyleBackColor = true;
             buttonCrearSubasta.Click += buttonCrearSubasta_Click;
-            // 
-            // buttonSubastasAbiertas
-            // 
-            buttonSubastasAbiertas.Dock = DockStyle.Top;
-            buttonSubastasAbiertas.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 224, 224);
-            buttonSubastasAbiertas.FlatAppearance.MouseOverBackColor = Color.FromArgb(224, 224, 224);
-            buttonSubastasAbiertas.FlatStyle = FlatStyle.Flat;
-            buttonSubastasAbiertas.Font = new Font("Century Gothic", 9F);
-            buttonSubastasAbiertas.ImageAlign = ContentAlignment.MiddleLeft;
-            buttonSubastasAbiertas.Location = new Point(0, 0);
-            buttonSubastasAbiertas.Name = "buttonSubastasAbiertas";
-            buttonSubastasAbiertas.Padding = new Padding(35, 0, 0, 0);
-            buttonSubastasAbiertas.Size = new Size(226, 23);
-            buttonSubastasAbiertas.TabIndex = 0;
-            buttonSubastasAbiertas.Text = "Subastas Abiertas";
-            buttonSubastasAbiertas.TextAlign = ContentAlignment.MiddleLeft;
-            buttonSubastasAbiertas.UseVisualStyleBackColor = true;
-            buttonSubastasAbiertas.Click += buttonSubastasAbiertas_Click;
             // 
             // buttonSubasta
             // 
@@ -373,7 +333,7 @@
             buttonSubasta.Location = new Point(10, 64);
             buttonSubasta.Name = "buttonSubasta";
             buttonSubasta.Padding = new Padding(10, 0, 0, 0);
-            buttonSubasta.Size = new Size(226, 45);
+            buttonSubasta.Size = new Size(237, 45);
             buttonSubasta.TabIndex = 1;
             buttonSubasta.Text = "Administracion de Subastas";
             buttonSubasta.TextAlign = ContentAlignment.MiddleLeft;
@@ -389,7 +349,7 @@
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(10, 0);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(226, 64);
+            panelLogo.Size = new Size(237, 64);
             panelLogo.TabIndex = 0;
             // 
             // panelHijo
@@ -397,19 +357,20 @@
             panelHijo.Anchor = AnchorStyles.None;
             panelHijo.BorderStyle = BorderStyle.Fixed3D;
             panelHijo.Controls.Add(pictureBox1);
-            panelHijo.Location = new Point(243, -1);
+            panelHijo.Location = new Point(254, -1);
             panelHijo.Name = "panelHijo";
-            panelHijo.Size = new Size(691, 561);
+            panelHijo.Size = new Size(680, 561);
             panelHijo.TabIndex = 1;
             panelHijo.Paint += panelHijo_Paint;
             // 
             // pictureBox1
             // 
             pictureBox1.BorderStyle = BorderStyle.Fixed3D;
-            pictureBox1.Image = Properties.Resources.image;
-            pictureBox1.Location = new Point(75, 86);
+            pictureBox1.Image = Properties.Resources.Imagen_de_WhatsApp_2024_11_23_a_las_16_01_35_e3e7a1a8;
+            pictureBox1.Location = new Point(73, 41);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(551, 147);
+            pictureBox1.Size = new Size(542, 170);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -443,7 +404,6 @@
         private Button buttonSubasta;
         private Panel panelLogo;
         private Panel panelSubastas;
-        private Button buttonSubastasAbiertas;
         private Button buttonCrearSubasta;
         private Button buttonProximasSubastas;
         private Panel panelProducto;
@@ -457,7 +417,6 @@
         private Button buttonInfoProdSinOferta;
         private Panel panelHijo;
         private PictureBox pictureBox1;
-        private Button buttonOferentes;
         private Button buttonCerrarSesion;
         private Button button1;
         private Button button2;

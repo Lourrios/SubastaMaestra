@@ -142,6 +142,11 @@ namespace SubastaMaestra_Escritorio
                 }
             }
         }
+
+        private void dataGridViewUserMasActivo_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
     

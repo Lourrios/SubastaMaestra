@@ -73,7 +73,7 @@ namespace SubastaMaestra_Escritorio
                         producto.CategoryId,
                         producto.SellerName??"-",
                         producto.AuctionId,
-                        producto.Auction?.State,
+                        producto.Auction?.CurrentState,
 
                         producto.Description
                     );

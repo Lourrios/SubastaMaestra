@@ -2,6 +2,8 @@
 using SubastaMaestra.Data.Interfaces;
 using SubastaMaestra.Entities.Enums;
 using SubastaMaestra.Models.DTOs.Auction;
+using SubastaMaestra.Models.Utils;
+
 namespace SubastaMaestra_Escritorio
 {
     public partial class Menu : Form
@@ -18,12 +20,12 @@ namespace SubastaMaestra_Escritorio
         public Menu(IAuctionRepository auctionRepository, IMapper mapper)
         {
 
-            _auctionRepository=auctionRepository;
+        
             InitializeComponent();
-
+            _auctionRepository=auctionRepository;
             _mapper=mapper;
             CargarSubastas();
-            dataGridViewSubastas.AutoGenerateColumns= true;
+            ConfigurarDataGridView();
             
         }
 
@@ -37,17 +39,17 @@ namespace SubastaMaestra_Escritorio
 
         private async Task CargarSubastas()
         {
+            var (resul, error) = await ApiHelper.GetAsync<OperationResult<List<AuctionDTO>>>(ApiUrl.LocalURL + "api/Auction/list");
+            //var resultado = await _auctionRepository.GetAllAuctionsAsync();
 
-            var resultado = await _auctionRepository.GetAllAuctionsAsync();
-
-            if (resultado.Success)
+            if (resul.Success)
             {
-                listaSubastas = resultado.Value;  // Asignar el valor al DataSource
+                listaSubastas = resul.Value;  // Asignar el valor al DataSource
                 dataGridViewSubastas.DataSource = listaSubastas;
             }
             else
             {
-                MessageBox.Show(resultado.Message, "Error al cargar las subastas", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(resul.Message, "Error al cargar las subastas", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -92,34 +94,39 @@ namespace SubastaMaestra_Escritorio
         }
 
 
-        //private void ConfigurarDataGridView()
-        //{
-        //    dataGridViewSubastas.AutoGenerateColumns = false;
+        private void ConfigurarDataGridView()
+        {
+            dataGridViewSubastas.AutoGenerateColumns = false;
 
-        //    dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
-        //    {
-        //        DataPropertyName = "Title",
-        //        HeaderText = "Nombre"
-        //    });
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Title",
+                HeaderText = "Nombre",
+                Name = "Title",
+            });
 
-        //    dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
-        //    {
-        //        DataPropertyName = "StartDate",
-        //        HeaderText = "Fecha Inicio"
-        //    });
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "StartDate",
+                HeaderText = "Fecha Inicio",
+                Name =  "StarDate"
+            });
 
-        //    dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
-        //    {
-        //        DataPropertyName = "FinishDate",
-        //        HeaderText = "Fecha Cierre"
-        //    });
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "FinishDate",
+                HeaderText = "Fecha Cierre",
+                Name = "FinishDate"
 
-        //    dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
-        //    {
-        //        DataPropertyName = "State",
-        //        HeaderText = "Estado"
-        //    });
-        //}
+            });
+
+            dataGridViewSubastas.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "State",
+                HeaderText = "Estado",
+                Name ="State"
+            });
+        }
 
 
 
@@ -159,83 +166,59 @@ namespace SubastaMaestra_Escritorio
 
         private async void buttonDeshabilitar_Click(object sender, EventArgs e)
         {
-            //if (dataGridViewSubastas.SelectedRows.Count > 0)
-            //{
-            //    // Obtener la subasta seleccionada
-            //    var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
 
-            //    // Verificar que la subasta esté activa para deshabilitarla
-            //    if (subastaSeleccionada.State == AuctionState.Active)
-            //    {
-            //        // Cambiar el estado de la subasta 
-            //        subastaSeleccionada.State = AuctionState.Canceled;
 
-            //        // Llamar al método para actualizar la subasta
-            //        var resultado = await _auctionRepository.EditAuctionAsync(subastaSeleccionada, subastaSeleccionada.Id);
-
-            //        // Verificar el resultado
-            //        if (resultado.Success)
-            //        {
-            //            MessageBox.Show("Subasta deshabilitada con éxito.");
-            //            CargarSubastas(); // Recargar la lista de subastas
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show($"Error al deshabilitar la subasta: {resultado.Message}");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("La subasta ya está deshabilitada.", "Deshabilitar Subasta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Seleccione una subasta para deshabilitar.", "Deshabilitar Subasta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-
-            if (dataGridViewSubastas.SelectedRows.Count > 0)
             {
-                // Obtener la subasta seleccionada
-                var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
-
-                // Verificar que la subasta esté activa para deshabilitarla
-                if (subastaSeleccionada.State == AuctionState.Active)
+                if (dataGridViewSubastas.SelectedRows.Count > 0)
                 {
-                    // Cambiar el estado de la subasta a 'Canceled' o deshabilitada
-                    subastaSeleccionada.State = AuctionState.Canceled;
+                    // Obtener la subasta seleccionada del DataGridView
+                    var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
 
-                    try
+                    // Verificar que la subasta esté activa antes de deshabilitarla
+                    if (subastaSeleccionada.State == AuctionState.Active)
                     {
-                        // Llamar al método para actualizar la subasta en el repositorio
-                        var resultado = await _auctionRepository.EditAuctionAsync(subasta, subasta.Id);
+                        try
+                        {
+                            // Crear un DTO de actualización para modificar el estado
+                            var subastaUpdateDTO = new AuctionUpdateDTO
+                            {
+                                Id = subastaSeleccionada.Id,
+                                Title = subastaSeleccionada.Title,
+                                StartDate = subastaSeleccionada.StartDate,
+                                FinishDate = subastaSeleccionada.FinishDate,
+                                state = AuctionState.Canceled // Cambiar estado a "Canceled"
+                            };
 
-                        // Verificar el resultado
-                        if (resultado.Success)
-                        {
-                            MessageBox.Show("Subasta deshabilitada con éxito.");
-                            CargarSubastas(); // Recargar la lista de subastas
+                            // Llamar al método del repositorio para actualizar la subasta
+                            var resultado = await _auctionRepository.EditAuctionAsync(subastaUpdateDTO, subastaSeleccionada.Id);
+
+                            // Verificar el resultado de la operación
+                            if (resultado.Success)
+                            {
+                                MessageBox.Show("Subasta deshabilitada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                await CargarSubastas(); // Recargar la lista de subastas
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Error al deshabilitar la subasta: {resultado.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            MessageBox.Show($"Error al deshabilitar la subasta: {resultado.Message}");
+                            MessageBox.Show($"Ocurrió un error al intentar deshabilitar la subasta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show($"Ocurrió un error al intentar deshabilitar la subasta: {ex.Message}");
+                        MessageBox.Show("La subasta ya está deshabilitada.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("La subasta ya está deshabilitada.", "Deshabilitar Subasta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Seleccione una subasta para deshabilitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
-            {
-                MessageBox.Show("Seleccione una subasta para deshabilitar.", "Deshabilitar Subasta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {

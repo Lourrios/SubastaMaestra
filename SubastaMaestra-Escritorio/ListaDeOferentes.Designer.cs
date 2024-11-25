@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListaDeOferentes));
             dataGridViewOfertas = new DataGridView();
             label1 = new Label();
             buttonExit = new Button();
@@ -36,42 +37,54 @@
             // 
             // dataGridViewOfertas
             // 
-            dataGridViewOfertas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewOfertas.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridViewOfertas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewOfertas.Location = new Point(86, 70);
+            dataGridViewOfertas.Location = new Point(7, 87);
             dataGridViewOfertas.Name = "dataGridViewOfertas";
-            dataGridViewOfertas.Size = new Size(542, 277);
+            dataGridViewOfertas.Size = new Size(542, 301);
             dataGridViewOfertas.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(334, 34);
+            label1.Font = new Font("Century Gothic", 15.75F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label1.Location = new Point(217, 24);
             label1.Name = "label1";
-            label1.Size = new Size(99, 15);
+            label1.Size = new Size(189, 24);
             label1.TabIndex = 1;
             label1.Text = "Lista de oferentes";
+          
             // 
             // buttonExit
             // 
-            buttonExit.Location = new Point(572, 374);
+            buttonExit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExit.FlatAppearance.MouseDownBackColor = Color.FromArgb(255, 128, 128);
+            buttonExit.FlatAppearance.MouseOverBackColor = Color.FromArgb(192, 0, 0);
+            buttonExit.FlatStyle = FlatStyle.Flat;
+            buttonExit.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonExit.Image = (Image)resources.GetObject("buttonExit.Image");
+            buttonExit.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonExit.Location = new Point(555, 87);
             buttonExit.Name = "buttonExit";
-            buttonExit.Size = new Size(56, 23);
+            buttonExit.Size = new Size(69, 28);
             buttonExit.TabIndex = 2;
-            buttonExit.Text = "EXIT";
+            buttonExit.Text = " EXIT";
             buttonExit.UseVisualStyleBackColor = true;
             buttonExit.Click += buttonExit_Click;
             // 
             // ListaDeOferentes
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 16F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(702, 522);
+            BackColor = Color.White;
+            ClientSize = new Size(664, 476);
             Controls.Add(buttonExit);
             Controls.Add(label1);
             Controls.Add(dataGridViewOfertas);
+            Font = new Font("Century Gothic", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ListaDeOferentes";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ListaDeOferentes";

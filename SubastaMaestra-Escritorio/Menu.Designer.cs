@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
             label1 = new Label();
             label3 = new Label();
             dataGridViewSubastas = new DataGridView();
@@ -50,12 +51,14 @@
             // 
             // label1
             // 
+            label1.AccessibleName = "Administracion";
             label1.AutoSize = true;
-            label1.Location = new Point(252, 36);
+            label1.Font = new Font("Century Gothic", 18F, FontStyle.Underline);
+            label1.Location = new Point(235, 22);
             label1.Name = "label1";
-            label1.Size = new Size(79, 15);
+            label1.Size = new Size(255, 30);
             label1.TabIndex = 0;
-            label1.Text = "Crear Subasta";
+            label1.Text = "Administrar Subastas";
             // 
             // label3
             // 
@@ -68,12 +71,12 @@
             // dataGridViewSubastas
             // 
             dataGridViewSubastas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            dataGridViewSubastas.BackgroundColor = Color.White;
             dataGridViewSubastas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewSubastas.Location = new Point(12, 74);
             dataGridViewSubastas.Name = "dataGridViewSubastas";
-            dataGridViewSubastas.Size = new Size(457, 376);
+            dataGridViewSubastas.Size = new Size(457, 371);
             dataGridViewSubastas.TabIndex = 12;
-           
             // 
             // label4
             // 
@@ -143,7 +146,11 @@
             // 
             // buttonCrear
             // 
-            buttonCrear.Location = new Point(20, 42);
+            buttonCrear.FlatAppearance.MouseDownBackColor = Color.Silver;
+            buttonCrear.FlatAppearance.MouseOverBackColor = Color.Silver;
+            buttonCrear.FlatStyle = FlatStyle.Flat;
+            buttonCrear.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonCrear.Location = new Point(20, 33);
             buttonCrear.Name = "buttonCrear";
             buttonCrear.Size = new Size(125, 23);
             buttonCrear.TabIndex = 13;
@@ -153,6 +160,10 @@
             // 
             // buttonEditar
             // 
+            buttonEditar.FlatAppearance.MouseDownBackColor = Color.Silver;
+            buttonEditar.FlatAppearance.MouseOverBackColor = Color.Silver;
+            buttonEditar.FlatStyle = FlatStyle.Flat;
+            buttonEditar.Font = new Font("Century Gothic", 9.75F);
             buttonEditar.Location = new Point(20, 87);
             buttonEditar.Name = "buttonEditar";
             buttonEditar.Size = new Size(125, 23);
@@ -163,6 +174,10 @@
             // 
             // buttonRefresh
             // 
+            buttonRefresh.FlatAppearance.MouseDownBackColor = Color.Silver;
+            buttonRefresh.FlatAppearance.MouseOverBackColor = Color.Silver;
+            buttonRefresh.FlatStyle = FlatStyle.Flat;
+            buttonRefresh.Font = new Font("Century Gothic", 9.75F);
             buttonRefresh.Location = new Point(20, 197);
             buttonRefresh.Name = "buttonRefresh";
             buttonRefresh.Size = new Size(125, 23);
@@ -173,18 +188,22 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Right;
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             panel1.Controls.Add(buttonDeshabilitar);
             panel1.Controls.Add(buttonRefresh);
             panel1.Controls.Add(buttonEditar);
             panel1.Controls.Add(buttonCrear);
-            panel1.Location = new Point(501, 74);
+            panel1.Location = new Point(475, 74);
             panel1.Name = "panel1";
-            panel1.Size = new Size(200, 376);
+            panel1.Size = new Size(188, 259);
             panel1.TabIndex = 24;
             // 
             // buttonDeshabilitar
             // 
+            buttonDeshabilitar.FlatAppearance.MouseDownBackColor = Color.Silver;
+            buttonDeshabilitar.FlatAppearance.MouseOverBackColor = Color.Silver;
+            buttonDeshabilitar.FlatStyle = FlatStyle.Flat;
+            buttonDeshabilitar.Font = new Font("Century Gothic", 9.75F);
             buttonDeshabilitar.Location = new Point(20, 150);
             buttonDeshabilitar.Name = "buttonDeshabilitar";
             buttonDeshabilitar.Size = new Size(125, 23);
@@ -197,12 +216,17 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(702, 522);
+            BackColor = Color.White;
+            ClientSize = new Size(664, 517);
             Controls.Add(panel1);
             Controls.Add(dataGridViewSubastas);
             Controls.Add(label3);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Menu";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Administracion";
             Load += CrearSubasta_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).EndInit();
             panel1.ResumeLayout(false);

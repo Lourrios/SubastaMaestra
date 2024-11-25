@@ -28,27 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InformeProductosVendidos));
             dataGridView1 = new DataGridView();
             buttonGuardar = new Button();
             comboBox1 = new ComboBox();
             label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(62, 97);
+            dataGridView1.GridColor = Color.Black;
+            dataGridView1.Location = new Point(12, 105);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(551, 324);
+            dataGridView1.Size = new Size(503, 368);
             dataGridView1.TabIndex = 0;
             // 
             // buttonGuardar
             // 
-            buttonGuardar.Location = new Point(631, 110);
+            buttonGuardar.FlatStyle = FlatStyle.Flat;
+            buttonGuardar.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonGuardar.Location = new Point(521, 105);
             buttonGuardar.Name = "buttonGuardar";
-            buttonGuardar.Size = new Size(122, 23);
+            buttonGuardar.Size = new Size(122, 30);
             buttonGuardar.TabIndex = 1;
             buttonGuardar.Text = "Guardar Infome";
             buttonGuardar.UseVisualStyleBackColor = true;
@@ -56,32 +62,49 @@
             // 
             // comboBox1
             // 
+            comboBox1.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(281, 39);
+            comboBox1.Location = new Point(186, 74);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(184, 23);
+            comboBox1.Size = new Size(184, 25);
             comboBox1.TabIndex = 2;
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(136, 42);
+            label1.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(37, 76);
             label1.Name = "label1";
-            label1.Size = new Size(114, 15);
+            label1.Size = new Size(141, 17);
             label1.TabIndex = 3;
             label1.Text = "Seleccionar Subasta:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Century Gothic", 15.75F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label2.Location = new Point(240, 19);
+            label2.Name = "label2";
+            label2.Size = new Size(333, 24);
+            label2.TabIndex = 4;
+            label2.Text = "Informe de productos vendidos";
             // 
             // InformeProductosVendidos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.White;
+            ClientSize = new Size(664, 522);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(comboBox1);
             Controls.Add(buttonGuardar);
             Controls.Add(dataGridView1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InformeProductosVendidos";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "InformeProductosVendidos";
             Load += InformeProductosVendidos_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -95,5 +118,6 @@
         private Button buttonGuardar;
         private ComboBox comboBox1;
         private Label label1;
+        private Label label2;
     }
 }

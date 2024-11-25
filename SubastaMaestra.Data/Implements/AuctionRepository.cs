@@ -32,6 +32,31 @@ namespace SubastaMaestra.Data.Implements
         // Crear una nueva subasta
         public async Task<OperationResult<AuctionCreateDTO>> CreateAuctionAsync(AuctionCreateDTO auctionCreateDTO)
         {
+            if (auctionCreateDTO.StartDate.AddMinutes(5) < DateTime.Now) // validacion de fecha de inicio < fecha actual
+            {
+                return new OperationResult<AuctionCreateDTO> { Success = false, Message = "La fecha de inicio no puede ser anterior a la fecha actual" };
+
+
+
+            }
+            if (auctionCreateDTO.FinishDate < DateTime.Now) // validacion fecha fin > fecha inicio
+            {
+                return new OperationResult<AuctionCreateDTO> { Success = false, Message = "La fecha de fin debe ser anterior a la fecha  actual." };
+            }
+            if (auctionCreateDTO.FinishDate <= auctionCreateDTO.StartDate) // validacion fecha fin > fecha inicio
+            {
+                return new OperationResult<AuctionCreateDTO> { Success = false, Message = "La fecha de fin debe ser posterior a la fecha de inicio." };
+
+            }
+            if (auctionCreateDTO.StartDate.Date < DateTime.Now.AddDays(3))
+            {
+                return new OperationResult<AuctionCreateDTO> { Success = false, Message = "La subasta debe tener almenos 3 días de antelación para iniciar." };
+            }
+            var diff = auctionCreateDTO.FinishDate - auctionCreateDTO.StartDate;
+            if (diff < TimeSpan.FromDays(1))
+            {
+                return new OperationResult<AuctionCreateDTO> { Success = false, Message = "La subasta debe tener almenos 1 día de duración." };
+            }
 
             var auction = _mapper.Map<Auction>(auctionCreateDTO);
             auction.CurrentState = AuctionState.Pending;

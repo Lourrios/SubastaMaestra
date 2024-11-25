@@ -82,37 +82,65 @@ namespace SubastaMaestra_Escritorio
                     {
                         using (FileStream fs = new FileStream(sfd.FileName, FileMode.Create))
                         {
-                            Document doc = new Document(PageSize.A4);
+                            Document doc = new Document(PageSize.A4, 50, 50, 50, 50);
                             PdfWriter.GetInstance(doc, fs);
                             doc.Open();
 
+                            // Logo de la empresa (opcional)
+                            string logoPath = "C://Escritorio//SubastaMaestra-master//SubastaMaestra//logo//image.png"; // Cambia a la ruta real del logo
+                            if (File.Exists(logoPath))
+                            {
+                                iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(logoPath);
+                                logo.ScaleAbsoluteWidth(100);
+                                logo.ScaleAbsoluteHeight(50);
+                                logo.Alignment = Element.ALIGN_LEFT;
+                                doc.Add(logo);
+                            }
+
+                            // Información de la empresa
+                            Paragraph companyInfo = new Paragraph();
+                            companyInfo.Add(new Paragraph("Puja Maestra S.A.", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16)));
+                            companyInfo.Add(new Paragraph("CUIT: 30-12345678-9"));
+                            companyInfo.Add(new Paragraph("Tipo de Sociedad: Sociedad Anónima (S.A.)"));
+                            companyInfo.Add(new Paragraph("Dirección: Calle Ejemplo 123, Ciudad Ejemplo"));
+                            companyInfo.Add(new Paragraph("Teléfono: +54 9 1234-567890"));
+                            companyInfo.Add(new Paragraph("Correo Electrónico: contacto@pujamaestra.com"));
+                            companyInfo.SpacingAfter = 20; // Espacio después de la sección
+                            doc.Add(companyInfo);
+
                             // Título del documento
-                            doc.Add(new Paragraph("Informe de Subastas Más Populares"));
+                            doc.Add(new Paragraph("Informe de Subastas Más Populares", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14)));
                             doc.Add(new Paragraph($"Período: {dateTimePickerInicio.Value:dd/MM/yyyy} - {dateTimePickerFin.Value:dd/MM/yyyy}"));
                             doc.Add(new Paragraph($"Generado el: {DateTime.Now:dd/MM/yyyy HH:mm:ss}"));
-                            doc.Add(new Paragraph(" ")); // Espacio
+                            doc.Add(new Paragraph("\n")); // Espacio
 
-                            // Tabla PDF
+                            // Crear tabla PDF
                             PdfPTable table = new PdfPTable(4);
                             table.WidthPercentage = 100;
                             table.SetWidths(new float[] { 2, 2, 1, 2 });
 
-                            // Encabezados
-                            table.AddCell("Título");
-                            table.AddCell("Fecha Finalización");
-                            table.AddCell("Total Ofertas");
-                            table.AddCell("Monto Máximo");
+                            // Encabezados de la tabla
+                            table.AddCell(new PdfPCell(new Phrase("Título", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                            table.AddCell(new PdfPCell(new Phrase("Fecha Finalización", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                            table.AddCell(new PdfPCell(new Phrase("Total Ofertas", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))) { BackgroundColor = BaseColor.LIGHT_GRAY });
+                            table.AddCell(new PdfPCell(new Phrase("Monto Máximo", FontFactory.GetFont(FontFactory.HELVETICA_BOLD))) { BackgroundColor = BaseColor.LIGHT_GRAY });
 
-                            // Datos de las subastas
+                            // Llenar la tabla con los datos
                             foreach (var auction in _auctionReports)
                             {
                                 table.AddCell(auction.Title);
-                                table.AddCell(auction.FinishDate.ToString("yyyy/MM/dd"));
+                                table.AddCell(auction.FinishDate.ToString("dd/MM/yyyy"));
                                 table.AddCell(auction.TotalOfertas.ToString());
-                                table.AddCell(auction.HighestBidAmount.ToString("C"));
+                                table.AddCell($"${auction.HighestBidAmount.ToString("N2")}");
                             }
 
+                            // Agregar tabla al documento
                             doc.Add(table);
+
+                            // Pie de página
+                            doc.Add(new Paragraph("\nEste informe es propiedad de Puja Maestra S.A.", FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.GRAY)));
+                            doc.Add(new Paragraph("Todos los derechos reservados.", FontFactory.GetFont(FontFactory.HELVETICA, 10, BaseColor.GRAY)));
+
                             doc.Close();
                         }
 
@@ -125,5 +153,7 @@ namespace SubastaMaestra_Escritorio
                 }
             }
         }
+
+
     }
 }

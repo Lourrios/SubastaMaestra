@@ -38,8 +38,10 @@ namespace SubastaMaestra_Escritorio
                 Password = textBoxContraseña.Text
             };
 
-            var result = await _userRepository.ValidateUserAsync(loginDTO);
-            if (result.Success)
+
+            var result = await ApiHelper.PostLoginAsync(ApiUrl.LocalURL + "login", loginDTO);
+            //var result = await _userRepository.ValidateUserAsync(loginDTO);
+            if (result.success == true)
             {
                 MessageBox.Show("Inicio de sesión exitoso");
 
@@ -50,7 +52,7 @@ namespace SubastaMaestra_Escritorio
             }
             else
             {
-                MessageBox.Show("Error: " + result.Message);
+                MessageBox.Show("Error: " + result.message);
             }
         }
 
