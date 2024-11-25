@@ -53,7 +53,7 @@
             buttonGenerar.FlatAppearance.MouseOverBackColor = Color.FromArgb(128, 255, 128);
             buttonGenerar.FlatStyle = FlatStyle.Flat;
             buttonGenerar.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonGenerar.Location = new Point(498, 90);
+            buttonGenerar.Location = new Point(481, 100);
             buttonGenerar.Name = "buttonGenerar";
             buttonGenerar.Size = new Size(124, 23);
             buttonGenerar.TabIndex = 1;

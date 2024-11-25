@@ -74,7 +74,6 @@
             textBoxContraseña.Name = "textBoxContraseña";
             textBoxContraseña.Size = new Size(254, 23);
             textBoxContraseña.TabIndex = 3;
-            textBoxContraseña.UseSystemPasswordChar = true;
             // 
             // buttonLogin
             // 

@@ -32,6 +32,22 @@ namespace SubastaMaestra_Escritorio
                 MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // Validar formato del email
+            if (!IsValidEmail(textBoxUsuario.Text))
+            {
+                MessageBox.Show("Por favor, ingrese un correo electrónico válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Validar longitud mínima de la contraseña (8 caracteres)
+            if (textBoxContraseña.Text.Length < 8)
+            {
+                MessageBox.Show("La contraseña debe tener al menos 8 caracteres.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
             var loginDTO = new LoginRequestDTO
             {
                 Email = textBoxUsuario.Text,
@@ -75,6 +91,19 @@ namespace SubastaMaestra_Escritorio
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

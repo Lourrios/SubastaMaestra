@@ -56,7 +56,7 @@ namespace SubastaMaestra_Escritorio
                     Título = d.Title,
                     FechaFinalización = d.FinishDate.ToString("yyyy/MM/dd"),
                     TotalOfertas = d.TotalOfertas,
-                    MontoMáximoOferta = d.HighestBidAmount.ToString("C")
+                    MontoMáximoOferta = d.HighestBidAmount.ToString("C2")
                 }).ToList();
             }
             else

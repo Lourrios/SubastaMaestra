@@ -56,7 +56,7 @@
             buttonGuardar.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonGuardar.Location = new Point(466, 82);
             buttonGuardar.Name = "buttonGuardar";
-            buttonGuardar.Size = new Size(132, 32);
+            buttonGuardar.Size = new Size(132, 27);
             buttonGuardar.TabIndex = 1;
             buttonGuardar.Text = "Guardar Informe";
             buttonGuardar.UseVisualStyleBackColor = true;

@@ -124,9 +124,9 @@ namespace SubastaMaestra_Escritorio
             //        // Muestra un mensaje si no se encontraron productos
             //        MessageBox.Show(result.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    }
-            //}
 
         }
+            //}
 
         private void buttonOferentes_Click(object sender, EventArgs e)
         {

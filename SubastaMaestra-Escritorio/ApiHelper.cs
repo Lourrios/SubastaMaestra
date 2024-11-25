@@ -96,6 +96,29 @@ namespace SubastaMaestra_Escritorio
             }
         }
 
+        public static async Task<string> PatchAsync(string url, object objectToPass)
+        {
+            try
+            {
+                var jsonContent = JsonConvert.SerializeObject(objectToPass);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PatchAsync(url, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    string errorMessage = $"Operation failed. Status code: {response.StatusCode}";
+                    return errorMessage;
+                }
+            }
+            catch (Exception ex)
+            {
+                return $"An error occurred: {ex.Message}";
+            }
+        }
+
         public static async Task<string> PostAsync(string url, object objectToPass)
         {
             try

@@ -60,7 +60,7 @@
             buttonOferentes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             buttonOferentes.FlatStyle = FlatStyle.Flat;
             buttonOferentes.Font = new Font("Century Gothic", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonOferentes.Location = new Point(491, 68);
+            buttonOferentes.Location = new Point(501, 68);
             buttonOferentes.Name = "buttonOferentes";
             buttonOferentes.Size = new Size(107, 29);
             buttonOferentes.TabIndex = 2;

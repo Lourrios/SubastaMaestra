@@ -20,20 +20,20 @@ namespace SubastaMaestra_Escritorio
         public Menu(IAuctionRepository auctionRepository, IMapper mapper)
         {
 
-        
+
             InitializeComponent();
             _auctionRepository=auctionRepository;
             _mapper=mapper;
             CargarSubastas();
             ConfigurarDataGridView();
-            
+
         }
 
 
         private async void CrearSubasta_Load(object sender, EventArgs e)
 
         {
-           
+
 
         }
 
@@ -75,7 +75,7 @@ namespace SubastaMaestra_Escritorio
             {
                 var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
 
-             
+
 
                 var editarSubastaForm = new Editar(_auctionRepository, subastaSeleccionada);
 
@@ -183,24 +183,22 @@ namespace SubastaMaestra_Escritorio
                             var subastaUpdateDTO = new AuctionUpdateDTO
                             {
                                 Id = subastaSeleccionada.Id,
-                                Title = subastaSeleccionada.Title,
-                                StartDate = subastaSeleccionada.StartDate,
-                                FinishDate = subastaSeleccionada.FinishDate,
                                 state = AuctionState.Canceled // Cambiar estado a "Canceled"
                             };
 
+                            var resultado = await ApiHelper.PatchAsync(ApiUrl.LocalURL + $"api/Auction/deshabilitar/{subastaUpdateDTO.Id}", subastaUpdateDTO.Id);
                             // Llamar al método del repositorio para actualizar la subasta
-                            var resultado = await _auctionRepository.EditAuctionAsync(subastaUpdateDTO, subastaSeleccionada.Id);
+                            //var resultado = await _auctionRepository.EditAuctionAsync(subastaUpdateDTO, subastaSeleccionada.Id);
 
                             // Verificar el resultado de la operación
-                            if (resultado.Success)
+                            if (resultado != null)
                             {
                                 MessageBox.Show("Subasta deshabilitada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 await CargarSubastas(); // Recargar la lista de subastas
                             }
                             else
                             {
-                                MessageBox.Show($"Error al deshabilitar la subasta: {resultado.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show($"Error al deshabilitar la subasta: {resultado}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         catch (Exception ex)
@@ -218,15 +216,58 @@ namespace SubastaMaestra_Escritorio
                     MessageBox.Show("Seleccione una subasta para deshabilitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            }
+        }
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             CargarSubastas();
         }
 
+        private async void buttonHabilitar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewSubastas.SelectedRows.Count > 0)
+            {
+                var subastaSeleccionada = (AuctionDTO)dataGridViewSubastas.SelectedRows[0].DataBoundItem;
 
+                // Verifica si la subasta está en estado Cancelado
+                if (subastaSeleccionada.State == AuctionState.Canceled)
+                {
+                    try
+                    {
+                        var subastaUpdateDTO = new AuctionUpdateDTO
+                        {
+                            Id = subastaSeleccionada.Id,
+                            state = AuctionState.Active // Cambia el estado a Activo
+                        };
+
+                        var resultado = await ApiHelper.PatchAsync(ApiUrl.LocalURL + $"api/Auction/activar/{subastaUpdateDTO.Id}", subastaUpdateDTO);
+
+                        if (resultado != null)
+                        {
+                            MessageBox.Show("Subasta habilitada con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            await CargarSubastas(); // Recargar las subastas
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Error al habilitar la subasta: {resultado}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Solo se pueden habilitar subastas con estado Cancelado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una subasta para habilitar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
     }
-
 }
 

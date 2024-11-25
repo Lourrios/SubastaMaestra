@@ -46,11 +46,6 @@ namespace SubastaMaestra_Escritorio
                 // Asigna el resultado a _sales para realizar cálculos adicionales
                 _profitReports = result;
 
-                //// Calcula la deducción (10% del monto de cada venta)
-                //foreach (var profit in _profitReports)
-                //{
-                //    profit.GananciaTotal = sale.Amount * 0.10f;
-                //}
 
                 // Configura la vista para el DataGridView
                 var gananciasView = _profitReports.Select(report => new
@@ -59,8 +54,8 @@ namespace SubastaMaestra_Escritorio
                     FechaInicio = report.StartDate.ToString("dd/MM/yyyy"),
                     FechaFin = report.FinishDate.ToString("dd/MM/yyyy"),
                     ProductosVendidos = report.TotalProductosVendidos,
-                    TotalVentas = report.MontoTotalVentas.ToString("C"),
-                    GananciaEmpresa = report.GananciaTotal.ToString("C")
+                    TotalVentas = report.MontoTotalVentas.ToString("C2"),
+                    GananciaEmpresa = report.GananciaTotal.ToString("C2")
                 }).ToList();
 
                 // Asigna la vista al DataGridView

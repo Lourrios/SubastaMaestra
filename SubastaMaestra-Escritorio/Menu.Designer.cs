@@ -44,6 +44,7 @@
             buttonEditar = new Button();
             buttonRefresh = new Button();
             panel1 = new Panel();
+            buttonHabilitar = new Button();
             buttonDeshabilitar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSubastas).BeginInit();
             panel1.SuspendLayout();
@@ -178,7 +179,7 @@
             buttonRefresh.FlatAppearance.MouseOverBackColor = Color.Silver;
             buttonRefresh.FlatStyle = FlatStyle.Flat;
             buttonRefresh.Font = new Font("Century Gothic", 9.75F);
-            buttonRefresh.Location = new Point(20, 197);
+            buttonRefresh.Location = new Point(20, 251);
             buttonRefresh.Name = "buttonRefresh";
             buttonRefresh.Size = new Size(125, 23);
             buttonRefresh.TabIndex = 23;
@@ -189,14 +190,29 @@
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            panel1.Controls.Add(buttonHabilitar);
             panel1.Controls.Add(buttonDeshabilitar);
             panel1.Controls.Add(buttonRefresh);
             panel1.Controls.Add(buttonEditar);
             panel1.Controls.Add(buttonCrear);
             panel1.Location = new Point(475, 74);
             panel1.Name = "panel1";
-            panel1.Size = new Size(188, 259);
+            panel1.Size = new Size(188, 327);
             panel1.TabIndex = 24;
+            // 
+            // buttonHabilitar
+            // 
+            buttonHabilitar.FlatAppearance.MouseDownBackColor = Color.Silver;
+            buttonHabilitar.FlatAppearance.MouseOverBackColor = Color.Silver;
+            buttonHabilitar.FlatStyle = FlatStyle.Flat;
+            buttonHabilitar.Font = new Font("Century Gothic", 9.75F);
+            buttonHabilitar.Location = new Point(20, 136);
+            buttonHabilitar.Name = "buttonHabilitar";
+            buttonHabilitar.Size = new Size(125, 23);
+            buttonHabilitar.TabIndex = 25;
+            buttonHabilitar.Text = "Habilitar";
+            buttonHabilitar.UseVisualStyleBackColor = true;
+            buttonHabilitar.Click += buttonHabilitar_Click;
             // 
             // buttonDeshabilitar
             // 
@@ -204,7 +220,7 @@
             buttonDeshabilitar.FlatAppearance.MouseOverBackColor = Color.Silver;
             buttonDeshabilitar.FlatStyle = FlatStyle.Flat;
             buttonDeshabilitar.Font = new Font("Century Gothic", 9.75F);
-            buttonDeshabilitar.Location = new Point(20, 150);
+            buttonDeshabilitar.Location = new Point(20, 186);
             buttonDeshabilitar.Name = "buttonDeshabilitar";
             buttonDeshabilitar.Size = new Size(125, 23);
             buttonDeshabilitar.TabIndex = 24;
@@ -252,5 +268,6 @@
         private Button buttonRefresh;
         private Panel panel1;
         private Button buttonDeshabilitar;
+        private Button buttonHabilitar;
     }
 }
